@@ -4,18 +4,17 @@ class OrderItemsController < ApplicationController
 		@order_items = order_items.all
 	end
 		
-	# def show
-	# 	@order_item = Order.find_by(id: params[:id])
-	# 	flash[:success] = 'Item added to cart.'
-	# 	if @order_item.nil?
-	# 		flash.now[:error] = 'Item could not be added.'
-	# 		redirect_to product_order_items_path(params[:product_id])
-	# 		#render :new, status: :bad_request
-	# 		#head :not_found
-	# 		return
-	# 	end
-	# end
-
+	def show
+		@order_item = Order.find_by(id: params[:id])
+		flash[:success] = 'Item added to cart.'
+		if @order_item.nil?
+			flash.now[:error] = 'Item could not be added.'
+			redirect_to product_order_items_path(params[:product_id])
+			#render :new, status: :bad_request
+			#head :not_found
+			return
+		end
+	end
 
 
 	#ADD TO CART products/:product_id/order_items
