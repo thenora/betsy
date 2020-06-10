@@ -1,8 +1,8 @@
 class OrderItemsController < ApplicationController
 
-	# def index
-	# 	@order_items = order_items.all
-	# end
+	def index
+		@order_items = order_items.all
+	end
 		
 	# def show
 	# 	@order_item = Order.find_by(id: params[:id])
@@ -16,7 +16,7 @@ class OrderItemsController < ApplicationController
 	# 	end
 	# end
 
-	
+
 
 	#ADD TO CART products/:product_id/order_items
 	def create

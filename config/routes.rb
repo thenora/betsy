@@ -8,4 +8,7 @@ Rails.application.routes.draw do
 
   resources :order_items
   resources :orders
+
+  # shopping cart
+  get '/cart', to: 'orders#cart', as: 'cart'
 end

@@ -12,9 +12,9 @@ class OrdersController < ApplicationController
 		end
 	end
 
-    def create
-        @order = Order.new()
-    
-    end
+	def cart # show function for the open order at the moment
+		# session[:order][:id]
+	end
+
 end
 
