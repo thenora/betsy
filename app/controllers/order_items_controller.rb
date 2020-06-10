@@ -15,15 +15,18 @@ class OrderItemsController < ApplicationController
 		
 		if session[:order]
 			@open_order = Order.find_by(id: session[:order][:id])
-
+			@new_item = Order_Item.new(
+				product_id: params[:product_id],
+				order_id: @open_order.id
+			)
 		else
-			new_order = Order.new
+			@new_order = Order.new
 			session[:order] = new_order
 
-			
-
-			# maybe have an array of order_item ids within Order.
-			# or an array of order_item Objects
+			@new_item = Order_Item.new(
+				product_id: params[:product_id],
+				order_id: @new_order.id
+			)
 		end
 	
 	end
