@@ -1,0 +1,19 @@
+<main>
+<h2>All The Plants</h2>
+  <section>
+    <% @products.each do |product| %>
+              <h5>
+                <%=link_to product.name, product_path( product.id ) %>
+              </h5>
+              <h6>
+                Cost: $<%= sprintf('%.2f', product.price) %>
+              </h6>
+              <h6>
+                Quantity:
+                <%= product.qty %>
+              </h6>
+        <% end %>
+      </section>
+  </main>
+
+
