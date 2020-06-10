@@ -1,0 +1,18 @@
+product_1:
+  name: "Product 1"
+  price: 10.01
+  description: "This is a product that merchant_1 sells."
+  inventory: 5
+  merchant: merchant_1
+product_2:
+  name: "Product 2"
+  price: 5.00
+  description: "Merchant 2 sells this product."
+  inventory: 5
+  merchant: merchant_2
+product_3:
+  name: "Product 3"
+  price: 8.99
+  description: "This is also a product that merchant_1 sells."
+  inventory: 1
+  merchant: merchant_1
