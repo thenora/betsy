@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
 
 	def index
-		@order = orders.all
+		@order = Order.all
 	end
 		
 
@@ -13,7 +13,9 @@ class OrdersController < ApplicationController
 	end
 
 	def cart # show function for the open order at the moment
-		# session[:order][:id]
+		if session[:order]
+			@open_order = Order.find_by(id: session[:order][:id])
+		end
 	end
 
 end
