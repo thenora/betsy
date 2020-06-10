@@ -4,7 +4,6 @@ class OrdersController < ApplicationController
 		@order = Order.all
 	end
 		
-
 	def show
 		if @order.nil?
 			head :not_found
@@ -14,7 +13,7 @@ class OrdersController < ApplicationController
 
 	def cart # show function for the open order at the moment
 		if session[:order]
-			@open_order = Order.find_by(id: session[:order][:id])
+			@cart_items = Order.find_by(id: session[:order][:id]).order_items
 		end
 	end
 
