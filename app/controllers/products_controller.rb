@@ -28,7 +28,11 @@ class ProductsController < ApplicationController
   end
 
   def show
-
+    @product = Product.find_by(id: params[:id]) # TODO make controller fixture
+    if @product.nil?
+      head :not_found
+      return
+    end
   end
 
   def update
