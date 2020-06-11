@@ -3,9 +3,9 @@ class OrdersController < ApplicationController
 	#TODO: 
 
 	#all orders
-	def index
-		@order = orders.all
-	end
+	# def index
+	# 	@order = Order.all
+	# end
 		
 
 	#individual order
