@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_083459) do
     t.string "phone_num"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "status", default: true
   end
 
   create_table "products", force: :cascade do |t|
@@ -58,6 +59,8 @@ ActiveRecord::Schema.define(version: 2020_06_11_083459) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "merchant_id"
+    t.boolean "status"
+    t.string "photo_url"
     t.index ["merchant_id"], name: "index_products_on_merchant_id"
   end
 
