@@ -35,12 +35,40 @@ class ProductsController < ApplicationController
     end
   end
 
-  def update
+  def edit
+    @product = Product.find_by(id: params[:id])
 
+    if @product.nil?
+      head :not_found
+      return
+    end
+    # TODO add session id must match product merchant id
+    if @product.user_id != session[:user_id]
+      flash.now[:error] = "Oops. You can only edit your own products."
+      redirect_to product_path(@product.id)
+      return
+    end
+  end
+
+  def update
+    @product = Product.find_by(id: params[:id])
+
+    if @product.nil?
+      head :not_found
+      return
+    elsif @product.update(product_params)
+      flash[:success] = "Product updated!"
+      redirect_to product_path(@product.id) 
+      return
+    else # save failed
+      flash.now[:error] = "Oops! We couldn't update your product."
+      render :edit, status: :bad_request # show the new media form view again
+      return
+    end
   end
 
   def destroy
-
+    # TODO do we need this?
   end
 
   private
