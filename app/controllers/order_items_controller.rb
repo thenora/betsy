@@ -1,24 +1,6 @@
 class OrderItemsController < ApplicationController
-
-	def index
-		@order_items = order_items.all
-	end
-		
-	# def show
-	# 	@order_item = Order.find_by(id: params[:id])
-	# 	flash[:success] = 'Item added to cart.'
-	# 	if @order_item.nil?
-	# 		flash.now[:error] = 'Item could not be added.'
-	# 		redirect_to product_order_items_path(params[:product_id])
-	# 		#render :new, status: :bad_request
-	# 		#head :not_found
-	# 		return
-	# 	end
-	# end
-
-
-
-	#ADD TO CART products/:product_id/order_items
+	
+	#POST /order_items  { :order_item => { :name => "hello", :price => 6, }}
 	def create
 		if session[:order]
 			@open_order = Order.find_by(id: session[:order][:id])
@@ -54,35 +36,41 @@ class OrderItemsController < ApplicationController
 		end
 	end
 
-	#PATCH: UPDATE CART /orders/:id (params)
-	# def update
-	# 	@order_item = Vote.find_by(id: params[:id])
-	# 	if @order_item.nil?
-	# 		head :not_found
-	# 		return
-	# 	elsif @order_item.update(order_item_params)
-			
-	# 		redirect_to orders_path
-	# 		return
-	# 	else
-	# 		render :edit
-	# 		return
-	# 	end
-	# end
+	# PATCH:  /order_items/:id (params)
+	def update
+		@order_item = Order_item.find_by(id: params[:id])
+		if @order_item.nil?
+			head :not_found
+			return
+		elsif @order_item.update(order_item_params)
+			redirect_to orders_path # /orders
+			return
+		else
+			flash[:failure] = 'Order item could not be updated.'
+			redirect_to order_path(@order_item.order.id) #/orders/:id
+			return
+		end
+	end
 
-	#REMOVE FROM CART /orders/:id
-	# def destroy
-	# 	@order_item = Order.find_by(id: params[:id])
-	# 	if @order_item.nil?
-	# 		head :not_found
-	# 		return
-	# 	end
+	# DElETE  /order_items/:id
+	def destroy
+		@order_item = Order_item.find_by(id: params[:id])
+		if @order_item.nil?
+			head :not_found
+			return
+		end
   
-  # 	@order_item.destroy
-  
-  # 	redirect_to orders_path
-  # 	return
-	# end
+		@order_item.destroy
+		count = @order_item.order.order_items.count
+		if count == 0
+			@order_item.order.destroy
+			redirect_to orders_path # /orders
+			return
+		else
+			redirect_to order_path(@order_item.order.id) #/orders/:id
+			return
+		end
+	end
 
 end
 
