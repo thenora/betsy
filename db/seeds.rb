@@ -10,7 +10,7 @@ require 'csv'
 
 # MERCHANTS
 
-MERCHANTS_FILE = Rails.root.join('db', 'merchant-seeds.csv')
+MERCHANTS_FILE = Rails.root.join('db', 'merchant-seed.csv')
 puts "Loading raw merchant data from #{MERCHANTS_FILE}"
 
 merchant_failures = []
@@ -32,11 +32,11 @@ CSV.foreach(MERCHANTS_FILE, :headers => true) do |row|
 end
 
 puts "Added #{Merchant.count} merchants"
-puts "#{merchant_failures_failures.length} merchants failed to save"
+puts "#{merchant_failures.length} merchants failed to save"
 
 # PRODUCTS
 
-PRODUCTS_FILE = Rails.root.join('db', 'product-seeds.csv')
+PRODUCTS_FILE = Rails.root.join('db', 'product-seed.csv')
 puts "Loading raw product data from #{PRODUCTS_FILE}"
 
 product_failures = []
@@ -48,7 +48,7 @@ CSV.foreach(PRODUCTS_FILE, :headers => true) do |row|
   product.description = row['description']
   product.status = row['status']
   product.photo_url = row['photo_url']
-  product.user_id = Merchant.find(rand(1..6)).id
+  product.merchant_id = Merchant.find(rand(1..3)).id
   successful = product.save
 
   if !successful
