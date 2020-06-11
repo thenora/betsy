@@ -16,7 +16,6 @@ class OrderItemsController < ApplicationController
 		end
 	end
 
-
 	#ADD TO CART products/:product_id/order_items
 	def create
 		if session[:order]
@@ -25,6 +24,7 @@ class OrderItemsController < ApplicationController
 				name: params[:order_item][:name],
 				price: params[:order_item][:price],
 				quantity: params[:order_item][:quantity],
+				photo_url: params[:order_item][:photo_url],
 				product_id: params[:product_id],
 				order_id: @open_order.id
 			)
@@ -86,5 +86,5 @@ class OrderItemsController < ApplicationController
 end
 
 def order_items_params
-  return params.require(:order_item).permit(:name, :price, :quantity, :product_id, :order_id)
+  return params.require(:order_item).permit(:name, :price, :quantity, :photo_url, :product_id, :order_id)
 end
