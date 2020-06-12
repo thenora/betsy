@@ -11,15 +11,38 @@
 
   <body>
     <header>
-      <section>
-        <h1>Plantsy</h1>
-        <% if session[:user_id] %>
-          <%= link_to "Log out", logout_path, method: "delete" %>
-        <% else %>
-          <%= link_to "Login with Github", github_login_path %>
-        <% end %>
+      <h1>Plantsy</h1>
+
+      <section class="navigation-bar">
+        
+        <nav>
+          <%= link_to "Home", root_path %>
+          <%= link_to "Shop Plants", products_path %>
+          <%= link_to "Categories", root_path %>
+          <%= link_to "Merchants", root_path %>
+        </nav>
+
+        <section class="navigation-bar--right-side">
+          <% if session[:user_id] %>
+            <%= link_to "Log out", logout_path, method: "delete" %>
+          <% else %>
+            <%= link_to "Login with Github", github_login_path %>
+          <% end %>
+            |  
+          <%= link_to "Cart (CART NUM)", cart_path %>
+        </section>
+
       </section>
     </header>
-    <%= yield %>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <footer>
+      <small>
+        Emily Cowan, Jessica Liang, Kate Mangubat, Nora Robertson
+      </small>
+    </footer>
   </body>
 </html>
