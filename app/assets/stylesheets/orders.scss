@@ -2,6 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+.cart-page {
+	display: flex;
+}
+
+.cart-items-display {
+	flex: 4;
+}
+
+.checkout-info {
+	flex: 2;
+}
+
 .cart-item {
 	display: grid;
 	grid-template-columns: auto 3fr;
