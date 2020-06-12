@@ -19,5 +19,21 @@
       <p> Stock: <%= @product.inventory %> </p>
       <p> <%= @product.description %> </p>
     </div>
+
+    <%= form_for :order_item, url: product_order_items_path(@product.id)  do |f| %>
+      <div class="form">
+        <section>
+          <%= f.label :quantity %><br>
+          <%= f.text_field :quantity %>
+        </section>
+        <%= f.hidden_field :name, :value => @product.name %>
+        <%= f.hidden_field :price, :value => @product.price %>
+        <%= f.hidden_field :photo_url, :value => @product.photo_url %>
+        <section>
+          <%= f.submit 'Add to Cart' %>
+        </section>
+      </div>
+    <% end %>
+
   </section>
 </main>
