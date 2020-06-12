@@ -22,7 +22,7 @@ class ProductsController < ApplicationController
       redirect_to product_path(@product.id)
       return
     else # if save fails
-      flash.now[:error] = "Oops. We couldn't add your product."
+      flash.now[:error] = "Oops. We couldn't add your product because #{@product.errors.full_messages}."
       render :new, status: :bad_request # show the new media form again
       return
     end

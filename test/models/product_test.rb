@@ -22,7 +22,7 @@ describe Product do
 
     it "is valid when all fields are present" do
       # Act
-      result = @product_1.valid?
+      result = product_1.valid?
 
       # Assert
       expect(result).must_equal true
@@ -30,50 +30,50 @@ describe Product do
 
     it "is invalid without a name" do
       # Arrange
-      @product_1.name = nil
+      product_1.name = nil
     
       # Act
-      result = @product_1.valid?
+      result = product_1.valid?
     
       # Assert
       expect(result).must_equal false
-      expect(@product_1.errors.messages).must_include :name
+      # expect(@product_1.errors.messages).must_include :name
     end
 
     it "is invalid without a price" do
       # Arrange
-      @product_1.price = nil
+      product_1.price = nil
     
       # Act
-      result = @product_1.valid?
+      result = product_1.valid?
     
       # Assert
       expect(result).must_equal false
-      expect(@product_1.errors.messages).must_include :price
+      expect(product_1.errors.messages).must_include :price
     end
 
     it "is invalid without a price greater than 0" do
       # Arrange
-      @product_1.price = 0
+      product_1.price = 0
     
       # Act
-      result = @product_1.valid?
+      result = product_1.valid?
     
       # Assert
       expect(result).must_equal false
-      expect(@product_1.errors.messages).must_include :price
+      expect(product_1.errors.messages).must_include :price
     end
 
     it "is invalid without an inventory" do
       # Arrange
-      @product_1.category = nil
+      product_1.inventory = nil
     
       # Act
-      result = @product_1.valid?
+      result = product_1.valid?
     
       # Assert
       expect(result).must_equal false
-      expect(@product_1.errors.messages).must_include :inventory
+      expect(product_1.errors.messages).must_include :inventory
     end
   end
 end
