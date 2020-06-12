@@ -5,10 +5,13 @@
 
     <% @merchant.orders.each do |order| %>
       <h5>
-        <%= link_to order.id, order_path(order.id ) %>
+        ID: <%= link_to order.id, order_path(order.id ) %>
       </h5>
       <h6>
-        Number of Items: <%= sprintf('%.2f', product.price) %>
+        Number of Items: <%= order.order_items.length %>
+      </h6>
+      <h6>
+        Order Status: <%= order.status %>
       </h6>
     <% end %>
 

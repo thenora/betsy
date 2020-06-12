@@ -1,7 +1,34 @@
 require "test_helper"
 
 describe MerchantsController do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+
+
+  before do
+    @merchant = Merchant.create()
+    @order = Order.create()
+  end
+
+  let (:merchant_hash) {
+    {
+      merchant: {
+        username: "username",
+        email: "test@test.com",
+        uid: 1,
+        provider: "github"
+      }
+    }
+  }
+
+  describe "create" do
+
+  end
+
+  describe "show" do
+
+  end
+
+  describe "login/authorize with github" do
+    
+  end
+
 end
