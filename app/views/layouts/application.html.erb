@@ -34,6 +34,13 @@
 
       </section>
     </header>
+    <section class="flash">
+      <% flash.each do |name, message| %>
+        <div class="alert alert-<%= name %>">
+          <%= message %>
+        </div>
+      <% end %>
+    </section>
 
     <main>
       <%= yield %>
@@ -44,5 +51,6 @@
         Emily Cowan, Jessica Liang, Kate Mangubat, Nora Robertson
       </small>
     </footer>
+
   </body>
 </html>
