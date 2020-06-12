@@ -9,7 +9,6 @@
       <th>Zip Code</th>
       <th>Card Number</th>
       <th>Card Exp. Date</th>
-
   </tr>
     <tr>
         <td><%= @order[:guest_name] %></td>
@@ -22,3 +21,27 @@
 
   </tr>
 </table>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Product</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_items.each do |order_item|  %>
+      <tr>
+        <td><%= order_item.id %></td>
+        <td><%= order_item.name %></td>
+        <td><%= order_item.price %></td>
+        <td><%= order_item.quantity %></td>
+        <td><%= order_item.product.name %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+
