@@ -49,7 +49,6 @@ ActiveRecord::Schema.define(version: 2020_06_12_034231) do
     t.string "phone_num"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "status", default: true
     t.boolean "cart_status", default: true
   end
 
