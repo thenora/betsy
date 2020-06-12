@@ -13,9 +13,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params) # Instantiate a new work
-    @product.merchant_id = rand(1..3) # TODO this is temporary
-    # TODO add merchant
-    # @product.merchant_id = session[:merchant_id]
+    @product.merchant_id = session[:user_id]
 
     if @product.save
       flash[:success] = "Your product was added."
@@ -44,11 +42,12 @@ class ProductsController < ApplicationController
       return
     end
     # TODO add session id must match product merchant id
-    if @product.user_id != session[:user_id]
-      flash.now[:error] = "Oops. You can only edit your own products."
+    if @product.merchant_id != session[:user_id]
+      flash[:error] = "Oops. You can only edit your own products."
       redirect_to product_path(@product.id)
       return
     end
+
   end
 
   def update
