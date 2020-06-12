@@ -14,3 +14,66 @@
 /* Custom bootstrap variables must be set or imported *before* bootstrap. */
 @import "bootstrap";
 @import "**/*";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+header, h1, h2, h3 {
+	font-family: 'Nunito', sans-serif;
+}
+
+header {
+	min-height: 20vh;
+	padding: 1em 1.5em 0.75em;
+}
+
+footer {
+	height: 5vh;
+}
+
+header h1 {
+	font-size: 3em;
+	margin: 1em;
+}
+
+header, footer {
+	text-align: center;
+	background-color: #88BDBC;
+}
+
+h1 {
+	color: #254E58;
+	font-weight: 800;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+}
+
+main {
+	min-height: 75vh;
+	padding: 2em;
+}
+
+nav {
+	display: flex;
+	justify-content: space-between;
+	width: 50vw;
+}
+
+.navigation-bar {
+	display: flex;
+	font-size: 1.25em;
+	justify-content: space-between;
+}
+
+.navigation-bar a {
+	color: #e6fffe;
+}
+
+.navigation-bar a:hover {
+	color: #6E6658;
+	text-decoration: none;
+}

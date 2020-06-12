@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params) # Instantiate a new work
+    @product.merchant_id = rand(1..3) # TODO this is temporary
     # TODO add merchant
     # @product.merchant_id = session[:merchant_id]
 
@@ -21,7 +22,7 @@ class ProductsController < ApplicationController
       redirect_to product_path(@product.id)
       return
     else # if save fails
-      flash.now[:error] = "Oops. We couldn't add your product."
+      flash.now[:error] = "Oops. We couldn't add your product because #{@product.errors.full_messages}."
       render :new, status: :bad_request # show the new media form again
       return
     end
