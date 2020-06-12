@@ -10,12 +10,12 @@ class OrderItemsController < ApplicationController
 	#POST /order_items  { :order_item => { :name => "hello", :price => 6, }}
 	def create
 		if session[:order]
-			@open_order = Order.find_by(id: session[:order]["id"])
+			@open_order = Order.find_by(cart_status: session[:order]["cart_status"])
 			@new_item = OrderItem.new(
 				name: order_items_params[:name],
 				price: order_items_params[:price],
 				quantity: order_items_params[:quantity],
-				product_id: order_items_params[:product_id],
+				product_id: params[:product_id],
 				photo_url: order_items_params[:photo_url],
 				order_id: @open_order.id
 			)
@@ -29,7 +29,7 @@ class OrderItemsController < ApplicationController
 				name: order_items_params[:name],
 				price: order_items_params[:price],
 				quantity: order_items_params[:quantity],
-				product_id: order_items_params[:product_id],
+				product_id: params[:product_id],
 				photo_url: order_items_params[:photo_url],
 				order_id: @new_order.id
 			)
@@ -37,7 +37,7 @@ class OrderItemsController < ApplicationController
 			p "CREATE A SESSION"
 		end
 
-		if @new_item.save
+		if @new_item.save!
 			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
 			redirect_to cart_path
@@ -45,8 +45,7 @@ class OrderItemsController < ApplicationController
 		else
 			p "ITEM WAS not ADDED"
 			flash[:failure] = 'Item could not be added.'
-			redirect_to product_order_items_path(params[:product_id])
-			# redirect_back fallback_location: root_path
+			redirect_back fallback_location: root_path
 			return
 		end
 	end
@@ -70,10 +69,12 @@ class OrderItemsController < ApplicationController
 	# DElETE  /order_items/:id
 	def destroy
 		@order_item = OrderItem.find_by(id: params[:id])
+
 		if @order_item.nil?
 			head :not_found
 			return
 		end
+
 		@order_item.destroy
 		# redirect_to order_path(@order_item.order.id)
 
@@ -81,7 +82,7 @@ class OrderItemsController < ApplicationController
 		count = @order_item.order.order_items.count
 		if count == 0
 			@order_item.order.destroy
-			redirect_to orders_path # /orders
+			redirect_to cart_path # /orders
 			return
 		else
 			redirect_to order_path(@order_item.order.id) #/orders/:id
@@ -89,9 +90,7 @@ class OrderItemsController < ApplicationController
 		end
 	end
 
-end
-
-private
+	private
 
 	def order_items_params
 		return params.require(:order_item).permit(:name, :price, :quantity, :photo_url, :product_id, :order_id)
