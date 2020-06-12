@@ -67,18 +67,18 @@ class OrderItemsController < ApplicationController
 			return
 		end
 		@order_item.destroy
-		redirect_to order_path(@order_item.order.id)
-		
-		#TODO for later: check if order items have a count of 0, then delete order
-		# count = @order_item.order.order_items.count
-		# if count == 0
-		# 	@order_item.order.destroy
-		# 	redirect_to orders_path # /orders
-		# 	return
-		# else
-		# 	redirect_to order_path(@order_item.order.id) #/orders/:id
-		# 	return
-		# end
+		# redirect_to order_path(@order_item.order.id)
+
+		#check if order items have a count of 0, then delete order
+		count = @order_item.order.order_items.count
+		if count == 0
+			@order_item.order.destroy
+			redirect_to orders_path # /orders
+			return
+		else
+			redirect_to order_path(@order_item.order.id) #/orders/:id
+			return
+		end
 	end
 
 end
