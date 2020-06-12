@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "/auth/github", as: "github_login"
   get "/auth/:provider/callback", to: "merchants#create"
   delete "/logout", to: "merchants#destroy", as: "logout"
+  get "/dashboard", to: "merchants#dashboard", as: "dashboard"
 
   #Order_Items
   resources :order_items, only: [:index, :create, :update, :destroy, :show]
