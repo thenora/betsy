@@ -1,5 +1,5 @@
 name,price,description,inventory,status,photo_url
-"Product 1",10.01,"This is a product that a merchant sells.",5,true,"https://www.goodfreephotos.com/albums/plants/phyllotaxis-plant-spiral.jpg"
+"Product 1",10.01,"This is a product that a merchant sells.",15,true,"https://www.goodfreephotos.com/albums/plants/phyllotaxis-plant-spiral.jpg"
 "Product 2",5.00,"Another Merchant sells this product.",5,true,"https://cdn.pixabay.com/photo/2019/04/16/02/40/plant-4130769_960_720.png"
 "Product 3",8.99,"Stuff.",1,false,"https://p1.piqsels.com/preview/5/143/671/fittonia-variegated-leaves-indoor-plant-mottled-home-flower-house-plant.jpg"
 "Product 4",9.99,"Things.",1,true,"https://p1.piqsels.com/preview/5/143/671/fittonia-variegated-leaves-indoor-plant-mottled-home-flower-house-plant.jpg"
