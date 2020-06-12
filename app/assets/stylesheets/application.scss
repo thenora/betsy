@@ -26,6 +26,10 @@ header, h1, h2, h3 {
 	font-family: 'Nunito', sans-serif;
 }
 
+h2 {
+	color: #6E6658;
+}
+
 header {
 	min-height: 20vh;
 	padding: 1em 1.5em 0.75em;
@@ -61,6 +65,15 @@ nav {
 	display: flex;
 	justify-content: space-between;
 	width: 50vw;
+}
+
+a {
+	color: #88BDBC;
+}
+
+a:hover {
+	color: #254E58;
+	text-decoration: none;
 }
 
 .navigation-bar {

@@ -25,11 +25,12 @@
         <section class="navigation-bar--right-side">
           <% if session[:user_id] %>
             <%= link_to "Log out", logout_path, method: "delete" %>
+              |  
             <%=link_to "My Dashboard", dashboard_path %>
           <% else %>
             <%= link_to "Login with Github", github_login_path %>
           <% end %>
-            
+            |  
           <%= link_to "Cart (CART NUM)", cart_path %>
         </section>
 
