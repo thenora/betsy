@@ -13,6 +13,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params) # Instantiate a new work
+    @product.merchant_id = rand(1..3) # TODO this is temporary
     # TODO add merchant
     # @product.merchant_id = session[:merchant_id]
 
