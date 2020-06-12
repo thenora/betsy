@@ -1,4 +1,11 @@
 class OrderItemsController < ApplicationController
+	skip_before_action :verify_authenticity_token
+	#database order_items -> use OrderItem
+	#GET /order_items
+	def index
+		order_items = OrderItem.all.as_json(only: [:id, :name, :price, :quantity])
+		render json: order_items, status: :ok
+	end
 	
 	#POST /order_items  { :order_item => { :name => "hello", :price => 6, }}
 	def create
@@ -46,12 +53,12 @@ class OrderItemsController < ApplicationController
 
 	# PATCH:  /order_items/:id (params)
 	def update
-		@order_item = Order_item.find_by(id: params[:id])
+		@order_item = OrderItem.find_by(id: params[:id])
 		if @order_item.nil?
 			head :not_found
 			return
-		elsif @order_item.update(order_item_params)
-			redirect_to orders_path # /orders
+		elsif @order_item.update(order_items_params)
+			redirect_to order_path(@order_item.order.id) # /orders/:id
 			return
 		else
 			flash[:failure] = 'Order item could not be updated.'
@@ -62,13 +69,15 @@ class OrderItemsController < ApplicationController
 
 	# DElETE  /order_items/:id
 	def destroy
-		@order_item = Order_item.find_by(id: params[:id])
+		@order_item = OrderItem.find_by(id: params[:id])
 		if @order_item.nil?
 			head :not_found
 			return
 		end
-  
 		@order_item.destroy
+		# redirect_to order_path(@order_item.order.id)
+
+		#check if order items have a count of 0, then delete order
 		count = @order_item.order.order_items.count
 		if count == 0
 			@order_item.order.destroy
@@ -80,7 +89,12 @@ class OrderItemsController < ApplicationController
 		end
 	end
 
+end
+
+private
+
 	def order_items_params
 		return params.require(:order_item).permit(:name, :price, :quantity, :photo_url, :product_id, :order_id)
 	end
+
 end

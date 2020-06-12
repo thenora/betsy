@@ -1,0 +1,47 @@
+<h1>Order History</h1>
+
+<table style="text-align: center;">
+  <tr>
+      <th>Guest Name</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Zip Code</th>
+      <th>Card Number</th>
+      <th>Card Exp. Date</th>
+  </tr>
+    <tr>
+        <td><%= @order[:guest_name] %></td>
+        <td><%= @order[:email] %></td>
+        <td><%= @order[:address] %></td>
+        <td><%= @order[:city] %></td>
+        <td><%= @order[:zip_code] %></td>
+        <td><%= @order[:card_number] %></td>
+        <td><%= @order[:card_expiration_date] %></td>
+
+  </tr>
+</table>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Product</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.order_items.each do |order_item|  %>
+      <tr>
+        <td><%= order_item.id %></td>
+        <td><%= order_item.name %></td>
+        <td><%= order_item.price %></td>
+        <td><%= order_item.quantity %></td>
+        <td><%= order_item.product.name %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+
