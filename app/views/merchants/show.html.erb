@@ -1,0 +1,16 @@
+<main>
+  <h2><%= @merchant.username %>'s Dashboard</h2>
+
+  <section>
+
+    <% @merchant.orders.each do |order| %>
+      <h5>
+        <%= link_to order.id, order_path(order.id ) %>
+      </h5>
+      <h6>
+        Number of Items: <%= sprintf('%.2f', product.price) %>
+      </h6>
+    <% end %>
+
+  </section>
+</main>

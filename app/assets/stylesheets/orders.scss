@@ -1,3 +1,40 @@
 // Place all the styles related to the Orders controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.cart-page {
+	display: flex;
+}
+
+.cart-items-display {
+	flex: 4;
+}
+
+.checkout-info {
+	flex: 2;
+}
+
+.cart-item {
+	display: grid;
+	grid-template-columns: auto 3fr;
+	margin: 3em 1em;
+}
+
+.cart-item img {
+	height: 8em;
+	width: 8em;
+	object-fit: cover;
+	border-radius: 2em;
+	grid-column: 1 / 2;
+	margin-right: 0.5em;
+}
+
+.cart-item-info {
+	grid-column: 2 / 5;
+	padding: 0.5em;
+}
+
+.cart-item-info ul {
+	list-style-type: none;
+	padding: 0;
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_11_083459) do
+ActiveRecord::Schema.define(version: 2020_06_12_034231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_083459) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "product_id"
     t.bigint "order_id"
+    t.string "photo_url", default: "https://f1.pngfuel.com/png/584/952/34/black-and-white-flower-black-white-m-leaf-plant-stem-silhouette-computer-line-plants-png-clip-art.png"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
   end
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 2020_06_11_083459) do
     t.string "phone_num"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "cart_status", default: true
   end
 
   create_table "products", force: :cascade do |t|
@@ -58,6 +60,8 @@ ActiveRecord::Schema.define(version: 2020_06_11_083459) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "merchant_id"
+    t.boolean "status"
+    t.string "photo_url"
     t.index ["merchant_id"], name: "index_products_on_merchant_id"
   end
 

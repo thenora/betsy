@@ -9,6 +9,10 @@ describe ProductsController do
     products(:product_1)
   }
 
+  let (:inactive_product) {
+    products(:product_3)
+  }
+
   let (:product_hash) {
     {
       product: {
@@ -26,6 +30,8 @@ describe ProductsController do
       get products_path
       must_respond_with :success
     end
+
+    # TODO add doesn't display if status is set to false
   end
 
   describe "new" do
@@ -105,6 +111,8 @@ describe ProductsController do
       # Assert
       must_respond_with :not_found
     end
+
+    # TODO add cannot view product with status set to false
   end
 
   describe "update" do

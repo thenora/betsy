@@ -28,4 +28,14 @@ class MerchantsController < ApplicationController
     redirect_to root_path
   end
 
+  def show
+    @merchant = Merchant.find_by(id: params[:id])
+  end
+
+  private
+
+  def merchant_params
+    return params.require(:merchant).permit(:username, :email, :uid, :provider)
+  end
+
 end

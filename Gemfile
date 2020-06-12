@@ -78,5 +78,10 @@ group :test do
   gem 'minitest-reporters'
 end
 
+
+group :test do
+  gem 'simplecov', require: true
+end
+
 gem "omniauth"
 gem "omniauth-github"
