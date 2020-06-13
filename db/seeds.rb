@@ -34,6 +34,29 @@ end
 puts "Added #{Merchant.count} merchants"
 puts "#{merchant_failures.length} merchants failed to save"
 
+# CATEGORIES
+
+CATEGORIES_FILE = Rails.root.join('db', 'category-seed.csv')
+puts "Loading raw category data from #{CATEGORIES_FILE}"
+
+category_failures = []
+CSV.foreach(CATEGORIES_FILE, :headers => true) do |row|
+  category = Category.new 
+  category.name = row['name']
+  
+  successful = category.save
+
+  if !successful
+    category_failures << category
+    puts "Failed to save category: #{category.inspect}"
+  else
+    puts "created category: #{category.inspect}"
+  end
+end
+
+puts "Added #{Category.count} categories"
+puts "#{category_failures.length} categories failed to save"
+
 # PRODUCTS
 
 PRODUCTS_FILE = Rails.root.join('db', 'product-seed.csv')
