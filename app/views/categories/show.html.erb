@@ -1,2 +1,35 @@
-<h1>Categories#show</h1>
-<p>Find me in app/views/categories/show.html.erb</p>
+<section>
+    <h2>Browse <%=@category.name.capitalize%></h2>
+  </section>
+  
+  <div>
+    <% if @category.products.empty? %>
+     <h3>Oops! No plants in this category.</h3>
+   <% else %>
+      <section>
+        <% @category.products.each do |product| %>
+          <section>
+            <% if product.photo_url == nil || product.photo_url.length < 1  %>
+              <%= image_tag("https://f1.pngfuel.com/png/584/952/34/black-and-white-flower-black-white-m-leaf-plant-stem-silhouette-computer-line-plants-png-clip-art.png", :alt => "not found") %>
+            <% else %>
+              <%= image_tag(product.photo_url, :alt => product.name ) %>
+            <% end %>
+            <div>
+              <h5>
+                <%= link_to product.name, product_path( product.id ) %>
+              </h5>
+            </div>
+            <div>
+              <h6>
+                Cost: $<%= sprintf('%.2f', product.price) %>
+              </h6>
+              <h6>
+                Inventory:
+                <%= product.inventory %>
+              </h6>
+            </div>
+          </section>
+        <% end %>
+      </section>
+    <% end %>
+  </div>
