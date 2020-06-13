@@ -1,7 +1,7 @@
 <main>
   <section class="product-show">
-    <% if @product.photo_url == nil %>
-      <%= image_tag("https://f1.pngfuel.com/png/584/952/34/black-and-white-flower-black-white-m-leaf-plant-stem-silhouette-computer-line-plants-png-clip-art.png", :alt => "generic plant silhouette", class: "product-image") %>
+    <% if @product.photo_url == nil  || @product.photo_url.length < 1  %>
+      <%= image_tag("https://www.creativefabrica.com/wp-content/uploads/2019/10/01/Plant-Flower-Leaf-Agriculture-Icon-by-Hoeda80-11-580x386.jpg", :alt => "generic plant silhouette", class: "product-image") %>
     <% else %>
       <%= image_tag(@product.photo_url, :alt => @product.name, class:"product-image") %>
     <% end %>   

@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'categories/index'
+  get 'categories/show'
+  get 'categories/new'
+  get 'categories/create'
+  get 'categories/edit'
+  get 'categories/update'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'homepages#index'
 
@@ -8,6 +14,11 @@ Rails.application.routes.draw do
 
   get "/auth/github", as: "github_login"
   get "/auth/:provider/callback", to: "merchants#create"
+
+  #Category
+  resources :categories, except: :destroy
+
+  #Merchant
   delete "/logout", to: "merchants#destroy", as: "logout"
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
 
