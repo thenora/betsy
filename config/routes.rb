@@ -8,6 +8,11 @@ Rails.application.routes.draw do
 
   get "/auth/github", as: "github_login"
   get "/auth/:provider/callback", to: "merchants#create"
+
+  #Category
+  resources :categories, except: :destroy
+
+  #Merchant
   delete "/logout", to: "merchants#destroy", as: "logout"
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
 
