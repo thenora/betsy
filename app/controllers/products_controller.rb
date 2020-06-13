@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
       return
     else # if save fails
       flash.now[:error] = "Oops. We couldn't add your product because #{@product.errors.full_messages}."
-      render :new, status: :bad_request # show the new media form again
+      render :new, status: :bad_request # show the new product form again
       return
     end
   end
@@ -62,7 +62,7 @@ class ProductsController < ApplicationController
       return
     else # save failed
       flash.now[:error] = "Oops! We couldn't update your product."
-      render :edit, status: :bad_request # show the new media form view again
+      render :edit, status: :bad_request # show the new product form view again
       return
     end
   end
