@@ -10,7 +10,7 @@
 						<ul>
 							<li><strong>Cost: </strong><%= number_to_currency(item.price) %></li>
 							<li>
-								<%= form_for :order_item, url: order_item_path(item) do |f| %>
+								<%= form_for :order_item, url: order_item_path(item), method: :patch do |f| %>
 								<div class="cart-item-change-quantity">
 									<section>
 										<strong><%= f.label :quantity %>:</strong>
