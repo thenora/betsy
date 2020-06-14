@@ -73,11 +73,8 @@
 		<% end %>
 		</section>
 
-		</section>
-			<h3>
-				Total: 
-			</h3>
-				PUT TOTAL HERE
+		<section>
+			<h3>Total: <%= number_to_currency(@cart.total_price) %></h3>
 		</section>
 	</div>
 </div>
