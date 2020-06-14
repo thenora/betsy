@@ -47,6 +47,12 @@
 
 /* CHECKOUT */
 
+.checkout-page-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
 .checkout-form {
+	grid-column: 1 / 2;
 	width: 40vw;
 }

@@ -31,5 +31,5 @@ Rails.application.routes.draw do
   # shopping cart
   get '/cart', to: 'orders#cart', as: 'cart'
   patch '/checkout', to: 'orders#checkout', as: 'checkout'
-
+  get '/confirmation', to: 'orders#checkout', as: 'confirmation'
 end

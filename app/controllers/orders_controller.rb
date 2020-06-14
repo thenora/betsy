@@ -35,7 +35,9 @@ class OrdersController < ApplicationController
 			flash[:error] = "Unable to checkout."
       # head :not_found
       return
-    end
+		end
+		
+		@cart_items = @cart.order_items
 	end
 
 	def confirmation

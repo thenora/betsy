@@ -1,55 +1,99 @@
-<h2>Checkout</h2>
-  <section class="checkout-form">
-    <%= form_with model: @cart  do |f| %>
-      
-      <section class='form-group'>
-        <%= f.label :guest_name %>
-        <%= f.text_field :guest_name, class: 'form-control' %>
-      </section>
+<div class="checkout-page-container">
+	<div>
+		<h2>Checkout</h2>
+		<section class="checkout-form">
+			<%= form_with model: @cart, url: confirmation_path, method: :patch do |f| %>
+				
+				<section class='form-group'>
+					<%= f.label :guest_name %>
+					<%= f.text_field :guest_name, class: 'form-control' %>
+				</section>
 
-      <section class='form-group'>
-        <%= f.label :email %>
-        <%= f.text_field :email, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :email %>
+					<%= f.text_field :email, class: 'form-control' %>
+				</section>
 
-      <section class='form-group'>
-        <%= f.label :phone_num %>
-        <%= f.text_field :phone_num, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :phone_num %>
+					<%= f.text_field :phone_num, class: 'form-control' %>
+				</section>
 
-      <section class='form-group'>
-        <%= f.label :address %>
-        <%= f.text_field :address, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :address %>
+					<%= f.text_field :address, class: 'form-control' %>
+				</section>
 
-      <section class='form-group'>
-        <%= f.label :city %>
-        <%= f.text_field :city, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :city %>
+					<%= f.text_field :city, class: 'form-control' %>
+				</section>
 
-      <section class='form-group'>
-        <%= f.label :zip_code %>
-        <%= f.text_field :zip_code, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :zip_code %>
+					<%= f.text_field :zip_code, class: 'form-control' %>
+				</section>
 
-			<section class='form-group'>
-        <%= f.label :card_number %>
-        <%= f.text_field :card_number, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :card_number %>
+					<%= f.text_field :card_number, class: 'form-control' %>
+				</section>
 
-			<section class='form-group'>
-        <%= f.label :card_expiration_date %>
-        <%= f.text_field :card_expiration_date, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :card_expiration_date %>
+					<%= f.text_field :card_expiration_date, class: 'form-control' %>
+				</section>
 
-			<section class='form-group'>
-        <%= f.label :card_cvv %>
-        <%= f.text_field :card_cvv, class: 'form-control' %>
-      </section>
+				<section class='form-group'>
+					<%= f.label :card_cvv %>
+					<%= f.text_field :card_cvv, class: 'form-control' %>
+				</section>
 
-      <section class='form-group'>
-        <%= f.submit "Place Order", class: "btn btn-primary" %>
-      </section>
+				<section class='form-group'>
+					<%= f.submit "Place Order", class: "btn btn-primary" %>
+				</section>
 
-    <% end %>
-  </section>
+			<% end %>
+		</section>
+	</div>
+
+	<div>
+		<h2>Your Cart</h2>
+		<section>
+		<% @cart_items.each do |item| %>
+			<section class="cart-item">
+				<%= image_tag(item.photo_url, alt: "photo of the cart item") %>
+				<section class="cart-item-info">
+					<h3><%= item.name %></h3>
+					<ul>
+						<li><strong>Cost: </strong><%= number_to_currency(item.price) %></li>
+						<li>
+							<%= form_for :order_item, url: order_item_path(item), method: :patch do |f| %>
+							<div class="cart-item-change-quantity">
+								<section>
+									<strong><%= f.label :quantity %>:</strong>
+									<%= f.text_field :quantity, value: item.quantity %>
+								</section>
+								<section>
+									<%= f.submit 'Change?' %>
+								</section>
+							</div>
+							<% end %>
+						</li>
+						<li>
+							<%= link_to 'Delete Item', order_item_path(item), method: :delete, data: {confirm: "Are you sure?"} %>
+						</li>
+					</ul>
+				</section>
+			</section>
+		<% end %>
+		</section>
+
+		</section>
+			<h3>
+				Total: 
+			</h3>
+				PUT TOTAL HERE
+		</section>
+	</div>
+</div>
