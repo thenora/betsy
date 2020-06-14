@@ -28,5 +28,19 @@ class OrdersController < ApplicationController
 		end
 	end
 
+	def checkout
+
+	end
+
+	def confirmation
+
+	end
+
+	private
+
+	def orders_params
+		return params.require(:order).permit(:guest_name, :email, :phone_num, :address, :city, :state, :zip_code, :card_number, :card_expiration_date, :card_cvv)
+	end
+
 end
 
