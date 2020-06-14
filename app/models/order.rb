@@ -44,4 +44,15 @@ class Order < ApplicationRecord
     presence: true,
     format: { with: /\A.*(\d{3}).*(\d{3}).*(\d{4})\z/ },
     :on => :update
+
+
+  def total_price
+    total = 0.0
+
+		self.order_items.each do |item|
+			total += item.price
+		end
+
+		return total
+  end
 end

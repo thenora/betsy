@@ -62,27 +62,11 @@
 		<section>
 		<% @cart_items.each do |item| %>
 			<section class="cart-item">
-				<%= image_tag(item.photo_url, alt: "photo of the cart item") %>
 				<section class="cart-item-info">
 					<h3><%= item.name %></h3>
 					<ul>
 						<li><strong>Cost: </strong><%= number_to_currency(item.price) %></li>
-						<li>
-							<%= form_for :order_item, url: order_item_path(item), method: :patch do |f| %>
-							<div class="cart-item-change-quantity">
-								<section>
-									<strong><%= f.label :quantity %>:</strong>
-									<%= f.text_field :quantity, value: item.quantity %>
-								</section>
-								<section>
-									<%= f.submit 'Change?' %>
-								</section>
-							</div>
-							<% end %>
-						</li>
-						<li>
-							<%= link_to 'Delete Item', order_item_path(item), method: :delete, data: {confirm: "Are you sure?"} %>
-						</li>
+						<li><strong>Quantity: </strong><%= item.quantity %></li>
 					</ul>
 				</section>
 			</section>
