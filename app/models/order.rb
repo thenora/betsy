@@ -5,36 +5,43 @@ class Order < ApplicationRecord
   validates :card_number,
     presence: true,
     length: { is: 16 }, 
-    format: { with: /[0-9]{16}/ }
+    format: { with: /[0-9]{16}/ },
     :on => :update
 
   validates :card_expiration_date,
-    presence: true
+    presence: true,
+    :on => :update
 
   validates :card_cvv,
     presence: true,
     length: { is: 3 },
-    format: { with: /[0-9]{3}/ }
+    format: { with: /[0-9]{3}/ },
     :on => :update
 
   validates :address,
-    presence: true
+    presence: true,
+    :on => :update
   
   validates :city,
-    presence: true
-
-  validates :zip_code
     presence: true,
-    format: { with: /[\d]{5}\-/[\d]*/ }
+    :on => :update
 
-  validates :guest_name
-    presence: true
-
-  validates :email
+  validates :zip_code,
     presence: true,
-    format: { with: /.+@.+\..+/ }
+    format: { with: /[\d]{5}\-[\d]*/ },
+    :on => :update
 
-  validates :phone_num
+  validates :guest_name,
     presence: true,
-    format: { with: /^.*(\d{3}).*(\d{3}).*(\d{4})$/ }
+    :on => :update
+
+  validates :email,
+    presence: true,
+    format: { with: /.+@.+\..+/ },
+    :on => :update
+
+  validates :phone_num,
+    presence: true,
+    format: { with: /\A.*(\d{3}).*(\d{3}).*(\d{4})\z/ },
+    :on => :update
 end

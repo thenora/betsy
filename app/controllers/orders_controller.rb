@@ -29,7 +29,13 @@ class OrdersController < ApplicationController
 	end
 
 	def checkout
+		@cart = Order.find_by(cart_status: true)
 
+		if @cart.nil? || @cart.order_items.length == 0
+			flash[:error] = "Unable to checkout."
+      # head :not_found
+      return
+    end
 	end
 
 	def confirmation
