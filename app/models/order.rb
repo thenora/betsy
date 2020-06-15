@@ -50,7 +50,7 @@ class Order < ApplicationRecord
     total = 0.0
 
 		self.order_items.each do |item|
-			total += item.price
+			total += (item.price * item.quantity)
 		end
 
 		return total
