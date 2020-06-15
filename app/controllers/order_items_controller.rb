@@ -57,11 +57,12 @@ class OrderItemsController < ApplicationController
 			head :not_found
 			return
 		elsif @order_item.update(order_items_params)
-			redirect_to order_path(@order_item.order.id) # /orders/:id
+			flash[:success] = 'Order item quantity updated.'
+			redirect_to cart_path
 			return
 		else
 			flash[:failure] = 'Order item could not be updated.'
-			redirect_to order_path(@order_item.order.id) #/orders/:id
+			redirect_to cart_path
 			return
 		end
 	end
