@@ -36,7 +36,13 @@
 		<% end %>
 	</section>
 	<section class="checkout-info">
-		<h3>Total: <%= number_to_currency(@open_order.total_price) %></h3>
+		<h3>Total: 
+		<% if @open_order %>
+			<%= number_to_currency(@open_order.total_price) %>
+		<% else %>
+			$0.00
+		<% end %>
+		</h3>
 		<%= button_to "Checkout", checkout_path, :method => "get", class:"btn btn-primary" %>
 	</section>
 </section>

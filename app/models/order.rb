@@ -56,7 +56,16 @@ class Order < ApplicationRecord
 		return total
   end
 
-  def find_product_id
+  def self.purchase_changes(cart, cart_items)
+    p "reaching?"
+    cart.cart_status = false
+    cart.save
 
+    cart_items.each do |item|
+      matching_product = Product.find_by(id: item.product_id)
+
+      matching_product.inventory -= item.quantity
+      matching_product.save
+    end
   end
 end

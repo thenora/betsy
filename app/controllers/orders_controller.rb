@@ -19,24 +19,17 @@ class OrdersController < ApplicationController
 	end
 
 	def update
-		p "WHERE AMI"
 		@open_order = Order.find_by(cart_status: true)
 
 		if @open_order.nil?
-			p "NIL"
-
 			head :not_found
 			return
 		elsif @open_order.update(orders_params)
-			p "UPDATED"
-
 			redirect_to confirmation_path
       return
 		else
-			p "why"
-
 			flash[:error] = 'Order could not be placed.'
-			# redirect_to checkout_path
+			redirect_to checkout_path
       return
     end
 	end
@@ -52,13 +45,10 @@ class OrdersController < ApplicationController
 	end
 
 	def checkout
-		p "what the fu"
 		@cart = Order.find_by(cart_status: true)
 
-		if @cart.nil? || @cart.order_items.length == 0
-			p "*&******* HELLO???"
-			
-			flash[:error] = "Unable to checkout."
+		if @cart.nil? || @cart.order_items.length == 0			
+			flash[:failure] = "Unable to checkout."
 			redirect_to cart_path
       return
 		end
@@ -69,6 +59,8 @@ class OrdersController < ApplicationController
 	def confirmation
 		@cart = Order.find_by(cart_status: true)
 		@cart_items = @cart.order_items
+
+		Order.purchase_changes(@cart, @cart_items)
 	end
 
 	private
