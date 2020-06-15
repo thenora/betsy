@@ -37,6 +37,6 @@
 	</section>
 	<section class="checkout-info">
 		<h3>Total: <%= number_to_currency(@open_order.total_price) %></h3>
-		<%= button_to "Checkout", checkout_path, :method => "patch", class:"btn btn-primary" %>
+		<%= button_to "Checkout", checkout_path, :method => "get", class:"btn btn-primary" %>
 	</section>
 </section>

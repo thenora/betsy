@@ -26,10 +26,10 @@ Rails.application.routes.draw do
   resources :order_items, only: [:index, :create, :update, :destroy, :show]
 
   #Orders
-  resources :orders, only: [:index, :show]
+  resources :orders, only: [:index, :show, :update]
 
   # shopping cart
   get '/cart', to: 'orders#cart', as: 'cart'
-  patch '/checkout', to: 'orders#checkout', as: 'checkout'
-  get '/confirmation', to: 'orders#checkout', as: 'confirmation'
+  get '/checkout', to: 'orders#checkout', as: 'checkout'
+  get '/confirmation', to: 'orders#confirmation', as: 'confirmation'
 end

@@ -2,7 +2,7 @@
 	<div>
 		<h2>Checkout</h2>
 		<section class="checkout-form">
-			<%= form_with model: @cart, url: confirmation_path, method: :patch do |f| %>
+			<%= form_with model: @cart, url: order_path(@cart), method: :patch do |f| %>
 				
 				<section class='form-group'>
 					<%= f.label :guest_name %>
@@ -48,7 +48,7 @@
 					<%= f.label :card_cvv %>
 					<%= f.text_field :card_cvv, class: 'form-control' %>
 				</section>
-
+				
 				<section class='form-group'>
 					<%= f.submit "Place Order", class: "btn btn-primary" %>
 				</section>
