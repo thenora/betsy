@@ -18,7 +18,7 @@
         <nav>
           <%= link_to "Home", root_path %>
           <%= link_to "Shop Plants", products_path %>
-          <%= link_to "Categories", root_path %>
+          <%= link_to "Categories", categories_path %>
           <%= link_to "Merchants", root_path %>
         </nav>
 
@@ -27,6 +27,8 @@
             <%= link_to "Dashboard", merchant_path(session[:user_id]) %>
             |
             <%= link_to "Log out", logout_path, method: "delete" %>
+              |  
+            <%=link_to "My Dashboard", dashboard_path %>
           <% else %>
             <%= link_to "Login with Github", github_login_path %>
           <% end %>

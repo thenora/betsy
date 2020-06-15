@@ -8,8 +8,12 @@
 					<section class="cart-item-info">
 						<h3><%= item.name %></h3>
 						<ul>
-							<li>Cost: <%= number_to_currency(item.price) %></li>
-							<li>Quantity: <%= item.quantity %> (Change?) |  INSERT LINK TO DELETE</li>
+							<li><strong>Cost: </strong><%= number_to_currency(item.price) %></li>
+							<li>
+								<strong>Quantity: </strong><%= item.quantity %> (Change?)
+									|  
+								<%= link_to 'Delete', order_item_path(item), method: :delete, data: {confirm: "Are you sure?"} %>
+							</li>
 						</ul>
 					</section>
 				</section>

@@ -21,6 +21,10 @@ class MerchantsController < ApplicationController
     return redirect_to root_path
   end
 
+  def dashboard
+    @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
+  end
+
   def destroy
     session[:user_id] = nil
     flash[:success] = "Successfully logged out!"

@@ -1,14 +1,21 @@
 class OrderItemsController < ApplicationController
+	skip_before_action :verify_authenticity_token
+	#database order_items -> use OrderItem
+	#GET /order_items
+	def index
+		order_items = OrderItem.all.as_json(only: [:id, :name, :price, :quantity])
+		render json: order_items, status: :ok
+	end
 	
 	#POST /order_items  { :order_item => { :name => "hello", :price => 6, }}
 	def create
 		if session[:order]
-			@open_order = Order.find_by(id: session[:order]["id"])
+			@open_order = Order.find_by(cart_status: true)
 			@new_item = OrderItem.new(
 				name: order_items_params[:name],
 				price: order_items_params[:price],
 				quantity: order_items_params[:quantity],
-				product_id: order_items_params[:product_id],
+				product_id: params[:product_id],
 				photo_url: order_items_params[:photo_url],
 				order_id: @open_order.id
 			)
@@ -22,7 +29,7 @@ class OrderItemsController < ApplicationController
 				name: order_items_params[:name],
 				price: order_items_params[:price],
 				quantity: order_items_params[:quantity],
-				product_id: order_items_params[:product_id],
+				product_id: params[:product_id],
 				photo_url: order_items_params[:photo_url],
 				order_id: @new_order.id
 			)
@@ -38,20 +45,19 @@ class OrderItemsController < ApplicationController
 		else
 			p "ITEM WAS not ADDED"
 			flash[:failure] = 'Item could not be added.'
-			redirect_to product_order_items_path(params[:product_id])
-			# redirect_back fallback_location: root_path
+			redirect_back fallback_location: root_path
 			return
 		end
 	end
 
 	# PATCH:  /order_items/:id (params)
 	def update
-		@order_item = Order_item.find_by(id: params[:id])
+		@order_item = OrderItem.find_by(id: params[:id])
 		if @order_item.nil?
 			head :not_found
 			return
-		elsif @order_item.update(order_item_params)
-			redirect_to orders_path # /orders
+		elsif @order_item.update(order_items_params)
+			redirect_to order_path(@order_item.order.id) # /orders/:id
 			return
 		else
 			flash[:failure] = 'Order item could not be updated.'
@@ -62,25 +68,31 @@ class OrderItemsController < ApplicationController
 
 	# DElETE  /order_items/:id
 	def destroy
-		@order_item = Order_item.find_by(id: params[:id])
+		@order_item = OrderItem.find_by(id: params[:id])
+
 		if @order_item.nil?
 			head :not_found
 			return
 		end
-  
+
 		@order_item.destroy
+		# redirect_to order_path(@order_item.order.id)
+
+		#check if order items have a count of 0, then delete order
 		count = @order_item.order.order_items.count
 		if count == 0
 			@order_item.order.destroy
-			redirect_to orders_path # /orders
-			return
-		else
-			redirect_to order_path(@order_item.order.id) #/orders/:id
-			return
+			session[:order] = nil
 		end
+
+		redirect_to cart_path
+		return
 	end
+
+	private
 
 	def order_items_params
 		return params.require(:order_item).permit(:name, :price, :quantity, :photo_url, :product_id, :order_id)
 	end
+
 end
