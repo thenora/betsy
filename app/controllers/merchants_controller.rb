@@ -24,7 +24,7 @@ class MerchantsController < ApplicationController
   def dashboard
     @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
 
-    if @merchant.nil?
+    if session[:user_id].nil?
       flash[:error] = "You must be logged in to view this page!"
     end
   end

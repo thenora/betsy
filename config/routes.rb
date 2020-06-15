@@ -21,8 +21,8 @@ Rails.application.routes.draw do
   #Merchant
   delete "/logout", to: "merchants#destroy", as: "logout"
   
-  resources :merchants, only: [:show]
-  get "/dashboard", to: "merchants#dashboard", as: "dashboard"
+  # resources :merchants, only: [:show]
+  get "/merchants/:id", to: "merchants#dashboard", as: "dashboard"
 
   #Order_Items
   resources :order_items, only: [:index, :create, :update, :destroy, :show]

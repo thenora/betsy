@@ -82,8 +82,6 @@ ActiveRecord::Schema.define(version: 2020_06_13_100344) do
     t.index ["merchant_id"], name: "index_products_on_merchant_id"
   end
 
-  add_foreign_key "merchants", "orders"
-
   create_table "products_categories_joins", force: :cascade do |t|
     t.bigint "product_id"
     t.bigint "category_id"
@@ -91,6 +89,7 @@ ActiveRecord::Schema.define(version: 2020_06_13_100344) do
     t.index ["product_id"], name: "index_products_categories_joins_on_product_id"
   end
 
+  add_foreign_key "merchants", "orders"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "merchants"
