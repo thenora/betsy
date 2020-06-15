@@ -5,12 +5,12 @@
   <section>
     <%= link_to "Add a product", new_product_path %>
     <h3>Orders:</h3>
-    </ul>
+    <ul>
     <% @merchant.orders.each do |order| %>
       <li><%= link_to: "ID: #{order.id}", order_path(order.id), method: :get %></li>
     </ul>
     <h4>Products:</h4>
-    </ul>
+    <ul>
     <% @merchant.products.each do |order| %>
       <li>Name: <%= product.name %></li>
     </ul>
