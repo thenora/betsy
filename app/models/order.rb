@@ -26,6 +26,10 @@ class Order < ApplicationRecord
   #   presence: true,
   #   :on => :update
 
+  # validates :state,
+  #   presence: true,
+  #   :on => :update
+
   # validates :zip_code,
   #   presence: true,
   #   format: { with: /[\d]{5}\-[\d]*/ },
