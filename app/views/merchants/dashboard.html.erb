@@ -1,5 +1,13 @@
 <h2>Merchant Dashboard</h2>
 
 <section>
-  <%= link_to "Add a product", new_product_path %>
+  <% if @merchant.nil?%>
+    <h2>Please Log In!</h2>
+  <% else %>
+    <%= link_to "Add a product", new_product_path %>
+    </ul>
+    <% @merchant.orders.each do |order| %>
+      <li>ID: <%= order.id %></li>
+    </ul>
+  <% end %>
 </section>
