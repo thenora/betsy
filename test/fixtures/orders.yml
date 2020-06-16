@@ -1,5 +1,5 @@
 order1:
-  card_number: 123456
+  card_number: 1234567890123456
   card_expiration_date: 01/20
   card_cvv: 123
   address: 15 Main Street
@@ -7,10 +7,10 @@ order1:
   zip_code: 98010
   guest_name: Tyron Jenkins
   email: tyrone@gmail.com
-  phone_num: 456-123-1234
+  phone_num: (456)123-1234
   cart_status: false
 order2:
-  card_number: 987654
+  card_number: 9876543211234567
   card_expiration_date: 10/22
   card_cvv: 456
   address: 120 Seneca Road
@@ -18,10 +18,10 @@ order2:
   zip_code: 90010
   guest_name: Captain America
   email: capusa@gmail.com
-  phone_num: 206-253-7777
+  phone_num: (206)253-7777
   cart_status: false
 order3:
-  card_number: 732904
+  card_number: 5434567812345906
   card_expiration_date: 12/25
   card_cvv: 777
   address: 2020 Boeing Field Street
@@ -29,5 +29,5 @@ order3:
   zip_code: 10074
   guest_name: Seymour Gloots
   email: sgloots@gmail.com
-  phone_num: 975-619-2100
+  phone_num: (975)619-2100
   cart_status: false
