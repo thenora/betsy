@@ -103,7 +103,7 @@ describe OrdersController do
     end
 
     #### CAN'T DO THIS ONE YET!!!!! ##### WAIT FOR FINAL VALIDATIONS
-    
+
     # it "does not update a order if the form data violates passenger validations, and responds with a redirect" do
     #   new_order = Order.create
 
@@ -137,7 +137,36 @@ describe OrdersController do
   end
 
   describe "checkout" do
-    it "" do
+    it "must respond with success if cart has items" do
+      valid_cart = Order.create
+      valid_item = OrderItem.create(
+				name: @product.name,
+				price: @product.price,
+				quantity: 1,
+				product_id: @product.id,
+				photo_url: 'order.jpg',
+				order_id: valid_cart.id
+			)
+
+      get checkout_path
+
+      must_respond_with :ok
+    end
+
+    it "redirects back to cart path if there are no items" do
+      empty_cart = Order.create
+
+      get checkout_path
+
+      must_redirect_to cart_path
+    end
+
+    it "redirects back to cart path if no open cart has been made" do
+      bad_cart = Order.create(cart_status: false)
+
+      get checkout_path
+
+      must_redirect_to cart_path
     end
   end
 

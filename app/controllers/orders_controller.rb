@@ -48,12 +48,13 @@ class OrdersController < ApplicationController
 	def checkout
 		@cart = Order.find_by(cart_status: true)
 
-		if @cart.nil? || @cart.order_items.length == 0			
+		if @cart.nil? || @cart.order_items.length == 0		
 			flash[:failure] = "Unable to checkout."
 			redirect_to cart_path
       return
 		end
 		
+		head :ok
 		@cart_items = @cart.order_items
 	end
 
