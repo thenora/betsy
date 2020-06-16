@@ -60,6 +60,15 @@ class OrdersController < ApplicationController
 
 	def confirmation
 		@cart = Order.find_by(cart_status: true)
+
+		if @cart.nil? || @cart.order_items.length == 0
+			flash[:error] = "Unable to checkout."
+			render :update
+			return
+		end
+
+		head :ok
+
 		@cart_items = @cart.order_items
 
 		Order.purchase_changes(@cart, @cart_items)

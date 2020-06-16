@@ -171,7 +171,38 @@ describe OrdersController do
   end
 
   describe "confirmation" do
-    it "" do
+    it "responds with success if confirmation is loaded" do
+      valid_cart = Order.create
+      valid_item = OrderItem.create(
+				name: @product.name,
+				price: @product.price,
+				quantity: 1,
+				product_id: @product.id,
+				photo_url: 'order.jpg',
+				order_id: valid_cart.id
+			)
+
+      get confirmation_path
+
+      must_respond_with :success
+    end
+
+    it "responds with redirect if open cart is not found" do
+      bad_cart = Order.create(cart_status: false)
+
+      get checkout_path
+
+      must_redirect_to cart_path
+    end
+
+    it "responds with redirect if no items are in the cart" do
+      empty_cart = Order.create
+
+      get checkout_path
+
+      must_redirect_to cart_path
+
+      expect(session[:order]).must_be_nil
     end
   end
 end
