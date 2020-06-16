@@ -41,7 +41,15 @@ describe OrdersController do
   end
 
   describe "show" do
-    it "" do
+    it "responds with success when showing an existing valid order" do
+      new_order = Order.create
+      get order_path(new_order.id)
+      must_respond_with :success
+    end
+    
+    it "responds with 404 with an invalid order id" do
+      get order_path(-1)
+      must_respond_with :not_found
     end
   end
 
