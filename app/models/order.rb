@@ -61,8 +61,8 @@ class Order < ApplicationRecord
 		return total
   end
 
-  def self.purchase_changes(cart, cart_items)
-    cart.cart_status = false
-    cart.save
+  def purchase_changes
+    self.cart_status = false
+    self.save
   end
 end
