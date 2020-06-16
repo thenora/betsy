@@ -69,7 +69,7 @@ class OrdersController < ApplicationController
 
 		@cart_items = @cart.order_items
 
-		Order.purchase_changes(@cart, @cart_items)
+		@cart.purchase_changes
 
 		session[:order_id] = nil
 	end
