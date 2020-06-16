@@ -32,8 +32,7 @@ describe OrderItemsController do
         post product_order_items_path(@product.id), params: new_item_hash
       }.must_change 'OrderItem.count', 1
 
-      new_order_item = OrderItem.first
-      new_order = Order.first
+      new_order_item = OrderItem.find_by(name: @product.name)
 
       expect(new_order_item.name).must_equal @product.name
       expect(new_order_item.price).must_equal @product.price
