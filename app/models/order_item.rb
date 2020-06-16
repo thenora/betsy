@@ -9,7 +9,7 @@ class OrderItem < ApplicationRecord
     incoming_quantity = self.quantity
     matching_product = Product.find_by(id: self.product_id)
 
-    matching_product.inventory > incoming_quantity ? true : false
+    matching_product.inventory >= incoming_quantity ? true : false
   end
 
   def reduce_inventory

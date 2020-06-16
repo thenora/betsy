@@ -37,7 +37,8 @@ class OrderItemsController < ApplicationController
 			p "CREATE A SESSION"
 		end
 
-		if @new_item.save && @new_item.check_product_inventory
+		if @new_item.check_product_inventory
+			@new_item.save
 			@new_item.reduce_inventory
 			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
@@ -57,7 +58,8 @@ class OrderItemsController < ApplicationController
 		if @order_item.nil?
 			head :not_found
 			return
-		elsif @order_item.update(order_items_params) && @order_item.check_product_inventory
+		elsif @order_item.check_product_inventory
+			@order_item.update(order_items_params)
 			flash[:success] = 'Order item quantity updated.'
 			redirect_to cart_path
 			return
