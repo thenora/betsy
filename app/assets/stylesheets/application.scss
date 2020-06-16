@@ -19,6 +19,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
 body {
+	color: #254118;
 	font-family: 'Roboto', sans-serif;
 }
 
@@ -36,7 +37,12 @@ header {
 }
 
 footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-style: italic;
 	height: 5vh;
+
 }
 
 header h1 {
@@ -46,11 +52,12 @@ header h1 {
 
 header, footer {
 	text-align: center;
-	background-color: #88BDBC;
+	background: rgb(195,217,154);
+	background: linear-gradient(90deg, rgba(195,217,154,1) 0%, rgba(134,169,91,1) 48%);
 }
 
 h1 {
-	color: #254E58;
+	color: #254118;
 	font-weight: 800;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
@@ -83,10 +90,10 @@ a:hover {
 }
 
 .navigation-bar a {
-	color: #e6fffe;
+	color: #EBF6F5;
 }
 
 .navigation-bar a:hover {
-	color: #6E6658;
+	color: #015249;
 	text-decoration: none;
 }
