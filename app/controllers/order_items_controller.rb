@@ -38,7 +38,7 @@ class OrderItemsController < ApplicationController
 		end
 
 		if @new_item.save && @new_item.check_product_inventory
-			@new_item.inventory_changes
+			@new_item.reduce_inventory
 			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
 			redirect_to cart_path
@@ -57,12 +57,12 @@ class OrderItemsController < ApplicationController
 		if @order_item.nil?
 			head :not_found
 			return
-		elsif @order_item.update(order_items_params)
+		elsif @order_item.update(order_items_params) && @order_item.check_product_inventory
 			flash[:success] = 'Order item quantity updated.'
 			redirect_to cart_path
 			return
 		else
-			flash[:failure] = 'Order item could not be updated.'
+			flash[:failure] = 'Not enough inventory to update quantity.'
 			redirect_to cart_path
 			return
 		end
@@ -77,11 +77,12 @@ class OrderItemsController < ApplicationController
 			return
 		end
 
+		@order_item.add_inventory
 		@order_item.destroy
-		# redirect_to order_path(@order_item.order.id)
 
 		#check if order items have a count of 0, then delete order
 		count = @order_item.order.order_items.count
+
 		if count == 0
 			@order_item.order.destroy
 			session[:order] = nil

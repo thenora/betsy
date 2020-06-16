@@ -12,10 +12,17 @@ class OrderItem < ApplicationRecord
     matching_product.inventory > incoming_quantity ? true : false
   end
 
-  def inventory_changes
+  def reduce_inventory
     matching_product = Product.find_by(id: self.product_id)
 
     matching_product.inventory -= self.quantity
+    matching_product.save
+  end
+
+  def add_inventory
+    matching_product = Product.find_by(id: self.product_id)
+
+    matching_product.inventory += self.quantity
     matching_product.save
   end
 end
