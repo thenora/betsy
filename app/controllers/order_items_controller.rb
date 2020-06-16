@@ -38,7 +38,7 @@ class OrderItemsController < ApplicationController
 		end
 
 		if @new_item.check_product_inventory
-			@new_item.save
+			@new_item.check_order_item_existence(session[:order_id])
 			@new_item.reduce_inventory
 			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
