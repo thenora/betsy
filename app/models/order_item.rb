@@ -4,8 +4,10 @@ class OrderItem < ApplicationRecord
   belongs_to :order
 
   validates :name, presence: true
+  validates :quantity, presence: true
 
   def check_product_inventory
+    return false if self.quantity == nil
     incoming_quantity = self.quantity
     matching_product = Product.find_by(id: self.product_id)
 
