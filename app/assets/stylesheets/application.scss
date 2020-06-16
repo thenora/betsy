@@ -48,16 +48,17 @@ footer {
 header h1 {
 	font-size: 3em;
 	margin: 1em;
+	text-shadow: -3px 3px 0px #254118;
 }
 
 header, footer {
 	text-align: center;
-	background: rgb(195,217,154);
-	background: linear-gradient(90deg, rgba(195,217,154,1) 0%, rgba(134,169,91,1) 48%);
+	background: rgb(134,169,91);
+	background: linear-gradient(90deg, rgba(134,169,91,1) 0%, rgba(37,65,24,1) 100%);
 }
 
 h1 {
-	color: #254118;
+	color: #C3D99A;
 	font-weight: 800;
 	letter-spacing: 0.2em;
 	text-transform: uppercase;
@@ -75,11 +76,11 @@ nav {
 }
 
 a {
-	color: #88BDBC;
+	color: #86A95B;
 }
 
 a:hover {
-	color: #254E58;
+	color: #93C441;
 	text-decoration: none;
 }
 
@@ -90,10 +91,10 @@ a:hover {
 }
 
 .navigation-bar a {
-	color: #EBF6F5;
+	color: #ddedbe;
 }
 
 .navigation-bar a:hover {
-	color: #015249;
+	color: #eff7df;
 	text-decoration: none;
 }
