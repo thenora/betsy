@@ -26,6 +26,30 @@ describe OrdersController do
     }
   }
   
+  describe "index" do
+    it "responds with success when there are many orders saved" do
+      new_order = Order.create
+      get orders_path
+      must_respond_with :success
+    end
+
+    it "responds with success when there are no orders saved" do
+      expect(Order.count).must_equal 0
+      get orders_path
+      must_respond_with :success
+    end
+  end
+
+  describe "show" do
+    it "" do
+    end
+  end
+
+  describe "update" do
+    it "" do
+    end
+  end
+
   describe "cart" do
     it "finds a list of orders if session order is populated" do
       expect {
@@ -42,4 +66,13 @@ describe OrdersController do
     end
   end
 
+  describe "checkout" do
+    it "" do
+    end
+  end
+
+  describe "confirmation" do
+    it "" do
+    end
+  end
 end
