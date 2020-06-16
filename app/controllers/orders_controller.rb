@@ -46,30 +46,28 @@ class OrdersController < ApplicationController
 	end
 
 	def checkout
-		@cart = Order.find_by(cart_status: true)
-
+		# @cart = Order.find_by(cart_status: true)
+		@cart = Order.find_by(id: session[:order]["id"])
 		if @cart.nil? || @cart.order_items.length == 0		
 			p "i broke it"
-			
+
 			flash[:failure] = "Unable to checkout."
 			redirect_to cart_path
       return
 		end
 		
-		head :ok
+		# head :ok
 		@cart_items = @cart.order_items
 	end
 
 	def confirmation
-		@cart = Order.find_by(cart_status: true)
+		@cart = Order.find_by(id: session[:order]["id"])
 
 		if @cart.nil? || @cart.order_items.length == 0
 			flash[:error] = "Unable to checkout."
 			redirect_to cart_path
 			return
 		end
-
-		head :ok
 
 		@cart_items = @cart.order_items
 

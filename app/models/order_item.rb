@@ -7,7 +7,7 @@ class OrderItem < ApplicationRecord
   validates :quantity, presence: true
 
   def check_product_inventory
-    return false if self.quantity == nil
+    return false if self.quantity == nil || self.quantity == 0
     incoming_quantity = self.quantity
     matching_product = Product.find_by(id: self.product_id)
 
