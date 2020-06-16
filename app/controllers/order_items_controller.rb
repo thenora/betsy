@@ -9,8 +9,8 @@ class OrderItemsController < ApplicationController
 	
 	#POST /order_items  { :order_item => { :name => "hello", :price => 6, }}
 	def create
-		if session[:order]
-			@open_order = Order.find_by(cart_status: true)
+		if session[:order_id]
+			@open_order = Order.find_by(id: session[:order_id])
 			@new_item = OrderItem.new(
 				name: order_items_params[:name],
 				price: order_items_params[:price],
@@ -23,7 +23,7 @@ class OrderItemsController < ApplicationController
 			p "SESSION IS HERE"
 		else
 			@new_order = Order.create
-			session[:order] = @new_order
+			session[:order_id] = @new_order.id
 			
 			@new_item = OrderItem.new(
 				name: order_items_params[:name],
@@ -37,14 +37,16 @@ class OrderItemsController < ApplicationController
 			p "CREATE A SESSION"
 		end
 
-		if @new_item.save
+		if @new_item.check_product_inventory
+			@new_item.check_order_item_existence(session[:order_id])
+			@new_item.reduce_inventory
 			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
 			redirect_to cart_path
 			return
 		else
 			p "ITEM WAS not ADDED"
-			flash[:failure] = 'Item could not be added.'
+			flash[:failure] = 'Not enough product inventory.'
 			redirect_back fallback_location: root_path
 			return
 		end
@@ -56,12 +58,13 @@ class OrderItemsController < ApplicationController
 		if @order_item.nil?
 			head :not_found
 			return
-		elsif @order_item.update(order_items_params)
+		elsif @order_item.check_product_inventory
+			@order_item.update(order_items_params)
 			flash[:success] = 'Order item quantity updated.'
 			redirect_to cart_path
 			return
 		else
-			flash[:failure] = 'Order item could not be updated.'
+			flash[:failure] = 'Not enough inventory to update quantity.'
 			redirect_to cart_path
 			return
 		end
@@ -76,14 +79,15 @@ class OrderItemsController < ApplicationController
 			return
 		end
 
+		@order_item.add_inventory
 		@order_item.destroy
-		# redirect_to order_path(@order_item.order.id)
 
 		#check if order items have a count of 0, then delete order
 		count = @order_item.order.order_items.count
+
 		if count == 0
 			@order_item.order.destroy
-			session[:order] = nil
+			session[:order_id] = nil
 		end
 
 		redirect_to cart_path
