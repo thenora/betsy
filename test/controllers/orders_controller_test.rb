@@ -1,6 +1,7 @@
 require "test_helper"
 
 describe OrdersController do
+
   before do
     @merchant = Merchant.create(
       username: 'Leroy Jenkins',
@@ -54,8 +55,69 @@ describe OrdersController do
   end
 
   describe "update" do
-    it "" do
+    let (:update_hash) {
+      {
+        order: {
+          guest_name: 'Leroy Jenkins',
+          email: 'leroyj@gmail.com',
+          address: '444 Main St.',
+          city: 'Somewhere',
+          state: 'CA',
+          zip_code: '91007',
+          card_number: '4444333322221111',
+          card_expiration_date: '06/25',
+          card_cvv: '333',
+        }
+      }
+    }
+
+    it "can update an existing order with valid information accurately, and redirect" do
+      new_order = Order.create
+
+      expect {
+        patch order_path(new_order.id), params: update_hash
+      }.wont_change 'Order.count'
+
+      must_respond_with :redirect
+      must_redirect_to confirmation_path
+
+      find_order = Order.find_by(id: new_order.id)
+
+      expect(find_order.guest_name).must_equal update_hash[:order][:guest_name]
+      expect(find_order.email).must_equal update_hash[:order][:email]
+      expect(find_order.address).must_equal update_hash[:order][:address]
+      expect(find_order.city).must_equal update_hash[:order][:city]
+      expect(find_order.state).must_equal update_hash[:order][:state]
+      expect(find_order.zip_code).must_equal update_hash[:order][:zip_code]
+      expect(find_order.card_number).must_equal update_hash[:order][:card_number]
+      expect(find_order.card_expiration_date).must_equal update_hash[:order][:card_expiration_date]
+      expect(find_order.card_cvv).must_equal update_hash[:order][:card_cvv]
     end
+
+    it "does not update any order if given an invalid id, and responds with a 404" do
+      expect {
+        patch order_path(-1), params: update_hash
+      }.wont_change 'Order.count'
+
+      must_respond_with :not_found
+    end
+
+    #### CAN'T DO THIS ONE YET!!!!! ##### WAIT FOR FINAL VALIDATIONS
+    
+    # it "does not update a order if the form data violates passenger validations, and responds with a redirect" do
+    #   new_order = Order.create
+
+    #   update = {
+    #     passenger: {
+    #       name: '',
+    #       phone_num: ''
+    #     }
+    #   }
+
+    #   expect {
+    #     patch passenger_path(passenger.id), params: update
+    #   }.wont_change 'Passenger.count'
+    # end
   end
 
   describe "cart" do
