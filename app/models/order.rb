@@ -65,4 +65,12 @@ class Order < ApplicationRecord
     self.cart_status = false
     self.save
   end
+
+  def self.cart_item_count(session)
+    if session[:order_id].nil?
+      return '0'
+    else
+      return Order.find_by(id: session[:order_id]).order_items.length
+    end
+  end
 end

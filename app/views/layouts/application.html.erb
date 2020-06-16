@@ -31,7 +31,7 @@
             <%= link_to "Login with Github", github_login_path %>
           <% end %>
             |  
-          <%= link_to "Cart (CART NUM)", cart_path %>
+          <%= link_to "Cart (#{ Order.cart_item_count(session) })", cart_path %>
         </section>
 
       </section>
