@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
+/* CART */
+
 .cart-page {
 	display: flex;
 }
@@ -37,4 +39,20 @@
 .cart-item-info ul {
 	list-style-type: none;
 	padding: 0;
+}
+
+.cart-item-change-quantity section{
+	display: inline;
+}
+
+/* CHECKOUT */
+
+.checkout-page-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.checkout-form {
+	grid-column: 1 / 2;
+	width: 40vw;
 }

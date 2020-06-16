@@ -22,10 +22,13 @@ class MerchantsController < ApplicationController
   end
 
   def dashboard
-    @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
 
     if session[:user_id].nil?
       flash[:error] = "You must be logged in to view this page!"
+    # elsif session[:user_id] != params[:uid]
+    #   flash[:error] = "You are not authorized to view this page"
+    else
+      @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
     end
   end
 
@@ -43,7 +46,7 @@ class MerchantsController < ApplicationController
   private
 
   def merchant_params
-    return params.require(:merchant).permit(:username, :email, :uid, :provider)
+    return params.require(:merchant).permit(:id, :username, :email, :uid, :provider)
   end
 
 end

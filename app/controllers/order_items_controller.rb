@@ -37,14 +37,16 @@ class OrderItemsController < ApplicationController
 			p "CREATE A SESSION"
 		end
 
-		if @new_item.save
+		if @new_item.check_product_inventory
+			@new_item.save
+			@new_item.reduce_inventory
 			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
 			redirect_to cart_path
 			return
 		else
 			p "ITEM WAS not ADDED"
-			flash[:failure] = 'Item could not be added.'
+			flash[:failure] = 'Not enough product inventory.'
 			redirect_back fallback_location: root_path
 			return
 		end
@@ -56,12 +58,14 @@ class OrderItemsController < ApplicationController
 		if @order_item.nil?
 			head :not_found
 			return
-		elsif @order_item.update(order_items_params)
-			redirect_to order_path(@order_item.order.id) # /orders/:id
+		elsif @order_item.check_product_inventory
+			@order_item.update(order_items_params)
+			flash[:success] = 'Order item quantity updated.'
+			redirect_to cart_path
 			return
 		else
-			flash[:failure] = 'Order item could not be updated.'
-			redirect_to order_path(@order_item.order.id) #/orders/:id
+			flash[:failure] = 'Not enough inventory to update quantity.'
+			redirect_to cart_path
 			return
 		end
 	end
@@ -75,11 +79,12 @@ class OrderItemsController < ApplicationController
 			return
 		end
 
+		@order_item.add_inventory
 		@order_item.destroy
-		# redirect_to order_path(@order_item.order.id)
 
 		#check if order items have a count of 0, then delete order
 		count = @order_item.order.order_items.count
+
 		if count == 0
 			@order_item.order.destroy
 			session[:order] = nil
