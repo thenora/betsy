@@ -35,6 +35,8 @@ describe OrdersController do
     end
 
     it "responds with success when there are no orders saved" do
+      Order.destroy_all
+
       expect(Order.count).must_equal 0
       get orders_path
       must_respond_with :success
@@ -60,11 +62,12 @@ describe OrdersController do
         order: {
           guest_name: 'Leroy Jenkins',
           email: 'leroyj@gmail.com',
-          address: '444 Main St.',
+          phone_num: "(456)123-1234",
+          address: '444 Main Street',
           city: 'Somewhere',
           state: 'CA',
           zip_code: '91007',
-          card_number: '4444333322221111',
+          card_number: '1234567890123456',
           card_expiration_date: '06/25',
           card_cvv: '333',
         }
@@ -102,22 +105,19 @@ describe OrdersController do
       must_respond_with :not_found
     end
 
-    #### CAN'T DO THIS ONE YET!!!!! ##### WAIT FOR FINAL VALIDATIONS
+    it "does not update a order if the form data violates form validations, and responds with a redirect" do
+      new_order = Order.create
 
-    # it "does not update a order if the form data violates passenger validations, and responds with a redirect" do
-    #   new_order = Order.create
+      update = {
+        order: {
+          name: '',
+        }
+      }
 
-    #   update = {
-    #     passenger: {
-    #       name: '',
-    #       phone_num: ''
-    #     }
-    #   }
-
-    #   expect {
-    #     patch passenger_path(passenger.id), params: update
-    #   }.wont_change 'Passenger.count'
-    # end
+      expect {
+        patch order_path(new_order.id), params: update
+      }.wont_change 'Order.count'
+    end
   end
 
   describe "cart" do
@@ -126,13 +126,11 @@ describe OrdersController do
         post product_order_items_path(@product.id), params: new_item_hash
       }.must_change 'OrderItem.count', 1
 
-      new_order_item = OrderItem.first
-      new_order = Order.first
-      cart_items = Order.find_by(id: session[:order_id]).order_items
+      new_order = Order.find_by(id: session[:order_id])
+      cart_items = new_order.order_items
 
       expect(session[:order_id]).must_equal new_order.id
       expect(cart_items.length).must_equal 1
-      expect(cart_items[0]).must_equal new_order_item
     end
   end
 

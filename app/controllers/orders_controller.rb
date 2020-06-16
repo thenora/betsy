@@ -46,7 +46,6 @@ class OrdersController < ApplicationController
 	end
 
 	def checkout
-		# @cart = Order.find_by(cart_status: true)
 		@cart = Order.find_by(id: session[:order_id])
 		if @cart.nil? || @cart.order_items.length == 0		
 

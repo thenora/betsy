@@ -3,8 +3,8 @@ require "test_helper"
 describe Order do
   before do
 
-    @new_order = Order.new(card_number: 1234567890123456, card_expiration_date: Date.today + 365, card_cvv: 123,
-      address: "15 Main Street", city: "Seattle", zip_code: 98010, guest_name: "Tyron Jenkins", email: "tyrone@gmail.com", phone_num: "(456)123-1234", cart_status: false)
+    @new_order = Order.new(card_number: 1234567890123456, card_expiration_date: Date.today + 365, card_cvv: '123',
+      address: "15 Main Street", city: "Seattle", state: 'wa', zip_code: '98010', guest_name: "Tyron Jenkins", email: "tyrone@gmail.com", phone_num: "(456)123-1234", cart_status: false)
     
     @product_1 = products(:product_1)
     @new_product1 = Product.create(name: @product_1.name, price: @product_1.price, inventory: @product_1.inventory)
@@ -77,6 +77,13 @@ describe Order do
       expect(@new_order.valid?).must_equal false
     end
 
+    it "is invalid without a state" do
+      expect(@new_order.valid?).must_equal true
+      @new_order.update(city: nil)
+      assert_nil(@new_order.city)
+      expect(@new_order.valid?).must_equal false
+    end
+
     it "is invalid without a zip code" do
       expect(@new_order.valid?).must_equal true
       expect(@new_order.zip_code.length).must_equal 5
@@ -129,7 +136,7 @@ describe Order do
   describe "total price" do
     it "calculates the order total correctly" do
       @price_order = orders(:order1)
-      expect(orders(:order1).valid?).must_equal true
+      expect(@price_order.valid?).must_equal true
       expect(@price_order.total_price).must_equal 0.0
     end
   end

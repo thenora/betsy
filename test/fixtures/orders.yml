@@ -4,6 +4,7 @@ order1:
   card_cvv: 123
   address: 15 Main Street
   city: Seattle
+  state: WA
   zip_code: 98010
   guest_name: Tyron Jenkins
   email: tyrone@gmail.com
@@ -15,6 +16,7 @@ order2:
   card_cvv: 456
   address: 120 Seneca Road
   city: Los Angeles
+  state: CA
   zip_code: 90010
   guest_name: Captain America
   email: capusa@gmail.com
@@ -26,6 +28,7 @@ order3:
   card_cvv: 777
   address: 2020 Boeing Field Street
   city: New York
+  state: NY
   zip_code: 10074
   guest_name: Seymour Gloots
   email: sgloots@gmail.com

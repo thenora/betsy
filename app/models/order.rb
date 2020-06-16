@@ -32,9 +32,9 @@ class Order < ApplicationRecord
     format: { with: /[\d]{5}/ },
     :on => :update
   
-  # validates :state,
-  #   presence: true,
-  #   :on => :update
+  validates :state,
+    presence: true,
+    :on => :update
   
   validates :guest_name,
     presence: true,
