@@ -37,6 +37,7 @@ class OrdersController < ApplicationController
 	def cart # show function for the open order at the moment
 		if !session[:order].nil?
 			@open_order = Order.find_by(cart_status: true)
+			p @open_order
 		end
 
 		if !@open_order.nil?

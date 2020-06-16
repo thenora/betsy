@@ -37,14 +37,15 @@ class OrderItemsController < ApplicationController
 			p "CREATE A SESSION"
 		end
 
-		if @new_item.save
+		if @new_item.save && @new_item.check_product_inventory
+			@new_item.inventory_changes
 			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
 			redirect_to cart_path
 			return
 		else
 			p "ITEM WAS not ADDED"
-			flash[:failure] = 'Item could not be added.'
+			flash[:failure] = 'Not enough product inventory.'
 			redirect_back fallback_location: root_path
 			return
 		end
