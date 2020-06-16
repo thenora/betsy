@@ -63,7 +63,7 @@ class OrdersController < ApplicationController
 
 		if @cart.nil? || @cart.order_items.length == 0
 			flash[:error] = "Unable to checkout."
-			render :update
+			redirect_to cart_path
 			return
 		end
 
