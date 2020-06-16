@@ -85,6 +85,31 @@ end
 puts "Added #{Product.count} products"
 puts "#{product_failures.length} products failed to save"
 
+
+# CATEGORIES_PRODUCTS
+
+CATEGORIES_PRODUCTS_FILE = Rails.root.join('db', 'category-product-seed.csv')
+puts "Loading raw category data from #{CATEGORIES_PRODUCTS_FILE}"
+
+categoryproduct_failures = []
+CSV.foreach(CATEGORIES_PRODUCTS_FILE, :headers => true) do |row|
+  category = Category.find_by(id: row["category_id"]) 
+  product = Product.find_by(id: row["product_id"]) 
+  product.categories << category
+  
+  successful = product.save
+
+  if !successful
+    categoryproduct_failures << product
+    puts "Failed to add category #{category.inspect} to product #{product.inspect}"
+  else
+    puts "added category #{category.inspect} to product #{product.inspect}"
+  end
+end
+
+# puts "Added #{Category_Product.count} category-product relationships"
+puts "#{categoryproduct_failures.length} category-product relationships failed to save"
+
 # ORDERS
 
 ORDERS_FILE = Rails.root.join('db', 'orders-seed.csv')
@@ -143,9 +168,6 @@ end
 
 puts "Added #{OrderItem.count} order items"
 puts "#{order_item_failures.length} order items failed to save"
-
-
-
 
 
 puts "Manually resetting each table's PK sequence"
