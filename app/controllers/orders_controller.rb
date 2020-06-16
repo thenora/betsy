@@ -37,6 +37,7 @@ class OrdersController < ApplicationController
 	def cart # show function for the open order at the moment
 		if !session[:order].nil?
 			@open_order = Order.find_by(cart_status: true)
+			p @open_order
 		end
 
 		if !@open_order.nil?
@@ -47,20 +48,32 @@ class OrdersController < ApplicationController
 	def checkout
 		@cart = Order.find_by(cart_status: true)
 
-		if @cart.nil? || @cart.order_items.length == 0			
+		if @cart.nil? || @cart.order_items.length == 0		
 			flash[:failure] = "Unable to checkout."
 			redirect_to cart_path
       return
 		end
 		
+		head :ok
 		@cart_items = @cart.order_items
 	end
 
 	def confirmation
 		@cart = Order.find_by(cart_status: true)
+
+		if @cart.nil? || @cart.order_items.length == 0
+			flash[:error] = "Unable to checkout."
+			redirect_to cart_path
+			return
+		end
+
+		head :ok
+
 		@cart_items = @cart.order_items
 
 		Order.purchase_changes(@cart, @cart_items)
+
+		session[:order] = nil
 	end
 
 	private

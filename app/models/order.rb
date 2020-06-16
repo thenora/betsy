@@ -26,6 +26,10 @@ class Order < ApplicationRecord
   #   presence: true,
   #   :on => :update
 
+  # validates :state,
+  #   presence: true,
+  #   :on => :update
+
   # validates :zip_code,
   #   presence: true,
   #   format: { with: /[\d]{5}\-[\d]*/ },
@@ -50,22 +54,14 @@ class Order < ApplicationRecord
     total = 0.0
 
 		self.order_items.each do |item|
-			total += item.price
+			total += (item.price * item.quantity)
 		end
 
 		return total
   end
 
   def self.purchase_changes(cart, cart_items)
-    p "reaching?"
     cart.cart_status = false
     cart.save
-
-    cart_items.each do |item|
-      matching_product = Product.find_by(id: item.product_id)
-
-      matching_product.inventory -= item.quantity
-      matching_product.save
-    end
   end
 end
