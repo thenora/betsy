@@ -21,10 +21,10 @@ order_item4:
   price: 21.00
   quantity: 1
   product_id: 1
-  order_id: 3
+  order: order3
 order_item5:
   name: echeveria2
   price: 22.00
   quantity: 2
   product_id: 2
-  order_id: 3
+  order: order3

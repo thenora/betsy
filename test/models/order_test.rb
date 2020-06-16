@@ -133,18 +133,25 @@ describe Order do
 
   end
   
-  describe "total price" do
+  describe "total price" do  
     it "calculates the order total correctly" do
-      @price_order = orders(:order1)
-      expect(@price_order.valid?).must_equal true
-      expect(@price_order.total_price).must_equal 0.0
+      expect(orders(:order3).total_price).must_equal 65.0
+    end
+
+    it "returns 0.0 if the order has no items" do
+      expect(orders(:order1).valid?).must_equal true
+      expect(orders(:order1).total_price).must_equal 0.0
     end
   end
 
-  # describe "purchase changes" do
-  #   it "change cart status?" do
-  #     TODO
-  #   end
-  # end
+  describe "purchase changes" do
+    it "flips cart status to inactive" do
+      new_order = Order.create
+
+      new_order.purchase_changes
+
+      expect(new_order.cart_status).must_equal false
+    end
+  end
 
 end #Order

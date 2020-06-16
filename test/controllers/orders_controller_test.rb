@@ -35,6 +35,7 @@ describe OrdersController do
     end
 
     it "responds with success when there are no orders saved" do
+      OrderItem.destroy_all
       Order.destroy_all
 
       expect(Order.count).must_equal 0
