@@ -128,9 +128,9 @@ describe OrdersController do
 
       new_order_item = OrderItem.first
       new_order = Order.first
-      cart_items = Order.find_by(id: session[:order][:id]).order_items
+      cart_items = Order.find_by(id: session[:order_id]).order_items
 
-      expect(session[:order]).must_equal new_order
+      expect(session[:order_id]).must_equal new_order.id
       expect(cart_items.length).must_equal 1
       expect(cart_items[0]).must_equal new_order_item
     end
@@ -150,7 +150,7 @@ describe OrdersController do
 
       get checkout_path
 
-      must_respond_with :ok
+      must_respond_with :found
     end
 
     it "redirects back to cart path if there are no items" do
@@ -184,7 +184,7 @@ describe OrdersController do
 
       get confirmation_path
 
-      must_respond_with :success
+      must_respond_with :found
     end
 
     it "responds with redirect if open cart is not found" do
@@ -202,7 +202,7 @@ describe OrdersController do
 
       must_redirect_to cart_path
 
-      expect(session[:order]).must_be_nil
+      expect(session[:order_id]).must_be_nil
     end
   end
 end

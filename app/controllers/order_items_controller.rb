@@ -9,8 +9,8 @@ class OrderItemsController < ApplicationController
 	
 	#POST /order_items  { :order_item => { :name => "hello", :price => 6, }}
 	def create
-		if session[:order]
-			@open_order = Order.find_by(cart_status: true)
+		if session[:order_id]
+			@open_order = Order.find_by(id: session[:order_id])
 			@new_item = OrderItem.new(
 				name: order_items_params[:name],
 				price: order_items_params[:price],
@@ -23,7 +23,7 @@ class OrderItemsController < ApplicationController
 			p "SESSION IS HERE"
 		else
 			@new_order = Order.create
-			session[:order] = @new_order
+			session[:order_id] = @new_order.id
 			
 			@new_item = OrderItem.new(
 				name: order_items_params[:name],
@@ -87,7 +87,7 @@ class OrderItemsController < ApplicationController
 
 		if count == 0
 			@order_item.order.destroy
-			session[:order] = nil
+			session[:order_id] = nil
 		end
 
 		redirect_to cart_path
