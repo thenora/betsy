@@ -48,6 +48,12 @@
 
   <section class="product-reviews">
     <h3>Reviews</h3>
+    
+    <% if @product.reviews.length > 0 %>
+      i have reviews
+    <% else %>
+      No reviews yet!
+    <% end %>
   </section>
 
 </section>
