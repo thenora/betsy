@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 describe OrderItemsController do
   before do
@@ -7,15 +9,15 @@ describe OrderItemsController do
       email: 'leroy@gmail.com'
     )
     @product = Product.create(
-      name: 'Plant One', 
-      price: 5.00, 
+      name: 'Plant One',
+      price: 5.00,
       description: 'This is a fake plant.',
       inventory: 5,
       merchant_id: @merchant.id
     )
   end
-  
-  let (:new_item_hash) {
+
+  let (:new_item_hash) do
     {
       order_item: {
         name: @product.name,
@@ -24,13 +26,13 @@ describe OrderItemsController do
         product_id: @product.id
       }
     }
-  }
-  
-  describe "create" do
-    it "can create a new OrderItem with valid information accurately, and redirect" do
-      expect {
+  end
+
+  describe 'create' do
+    it 'can create a new OrderItem with valid information accurately, and redirect' do
+      expect do
         post product_order_items_path(@product.id), params: new_item_hash
-      }.must_change 'OrderItem.count', 1
+      end.must_change 'OrderItem.count', 1
 
       new_order_item = OrderItem.find_by(name: @product.name)
 
@@ -38,17 +40,16 @@ describe OrderItemsController do
       expect(new_order_item.price).must_equal @product.price
       expect(new_order_item.quantity).must_equal 1
       expect(new_order_item.product_id).must_equal @product.id
-      expect(new_order_item.order_id).must_equal new_order.id
 
       must_redirect_to orders_path
     end
 
-    it "does not create a new OrderItem if the form data violates validations, and responds with a redirect" do
+    it 'does not create a new OrderItem if the form data violates validations, and responds with a redirect' do
       new_item_hash[:order_item][:name] = nil
-      
-      expect {
+
+      expect do
         post product_order_items_path(@product.id), params: new_item_hash
-      }.wont_change 'OrderItem.count'
+      end.wont_change 'OrderItem.count'
 
       must_redirect_to product_order_items_path(@product.id)
     end
@@ -81,13 +82,13 @@ describe OrderItemsController do
   #   end
   # end
 
-  describe "edit" do
-    it "responds with success when getting the edit page for an existing, valid order" do
+  describe 'edit' do
+    it 'responds with success when getting the edit page for an existing, valid order' do
       get edit_orders_path(trip)
       must_respond_with :success
     end
-    
-    it "responds with redirect when getting the edit page for a non-existing order item" do
+
+    it 'responds with redirect when getting the edit page for a non-existing order item' do
       get edit_orders_path(-1)
       must_redirect_to orders_path
     end
@@ -177,7 +178,6 @@ describe OrderItemsController do
   #   end
   # end
 
-
   # describe "destroy" do
   #   it "destroys the order item instance in db when order item exists, then redirects" do
   #     new_order_item = Order.create(name: 'Tyron Banks', price: 2, quantity: 30, product_id: @product.id, merchant_id: @merchant.id)
@@ -185,10 +185,10 @@ describe OrderItemsController do
   #     expect {
   #       delete orders_path(id: new_trip.id)
   #     }.must_differ 'Trip.count', -1
-      
+
   #     deleted = Trip.find_by(id: new_trip.id)
   #     expect(deleted).must_be_nil
-      
+
   #     must_redirect_to trips_path
   #   end
   #   it "does not change the db when the driver does not exist, then responds with " do
@@ -197,5 +197,4 @@ describe OrderItemsController do
   #     }.must_differ 'Trip.count', 0
   #   end
   # end
-
 end

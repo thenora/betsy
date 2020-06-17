@@ -14,7 +14,7 @@
       <h1>Plantsy</h1>
 
       <section class="navigation-bar">
-        
+
         <nav>
           <%= link_to "Home", root_path %>
           <%= link_to "Shop Plants", products_path %>
@@ -25,13 +25,13 @@
         <section class="navigation-bar--right-side">
           <% if session[:user_id] %>
             <%= link_to "Log out", logout_path, method: "delete" %>
-              |  
+              |
             <%=link_to "My Dashboard", dashboard_path %>
           <% else %>
             <%= link_to "Login with Github", github_login_path %>
           <% end %>
-            |  
-          <%= link_to "Cart (CART NUM)", cart_path %>
+            |
+          <%= link_to "Cart (#{ Order.cart_item_count(session) })", cart_path %>
         </section>
 
       </section>
