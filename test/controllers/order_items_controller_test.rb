@@ -3,96 +3,106 @@ require "test_helper"
 describe OrderItemsController do
   before do
     @merchant = Merchant.create(
-      username: 'Leroy Jenkins',
-      email: 'leroy@gmail.com'
+      username: 'test_user',
+      email: 'test_user@gmail.com'
     )
-    @product = Product.create(
-      name: 'Plant One', 
+    @test_product1 = Product.create(
+      name: 'test product1', 
       price: 5.00, 
       description: 'This is a fake plant.',
       inventory: 5,
       merchant_id: @merchant.id
     )
+    @new_order = Order.create(
+      card_number: 1234567890123456, 
+      card_expiration_date: Date.today + 365, 
+      card_cvv: 123,
+      address: "15 Main Street", 
+      city: "Seattle", 
+      zip_code: 98010, 
+      guest_name: "Tyron Jenkins", 
+      email: "tyrone@gmail.com", 
+      phone_num: "(456)123-1234"
+    )
+    @new_order1 = Order.create(
+      card_number: 1234567890123457, 
+      card_expiration_date: Date.today + 365, 
+      card_cvv: 121,
+      address: "151 Main Street", 
+      city: "Seattle", 
+      zip_code: 98011, 
+      guest_name: "test_user1", 
+      email: "test_user1@gmail.com", 
+      phone_num: "(456)123-1235"
+    )
+    @new_order_item = OrderItem.create(
+      name: @test_product1.name, 
+      price: @test_product1.price, 
+      quantity: 1, 
+      product_id: @test_product1.id, 
+      order_id: @new_order.id
+    )
+
+
   end
-  
+
   let (:new_item_hash) {
     {
       order_item: {
-        name: @product.name,
-        price: @product.price,
+        name: @test_product1.name,
+        price: @test_product1.price,
         quantity: 1,
-        product_id: @product.id
+        product_id: @test_product1.id
       }
     }
   }
   
+  describe "index" do
+    it "can get the index path" do
+      get order_items_path
+      must_respond_with :success
+    end
+
+    it "lists order items based on product id via nested routes" do
+      get product_order_items_path(@test_product1.id)
+      must_respond_with :success
+      body = JSON.parse(response.body)
+      expect(body.length).must_equal 1
+      expect(body[0]["name"]).must_equal @test_product1.name
+    end
+  end
+
   describe "create" do
     it "can create a new OrderItem with valid information accurately, and redirect" do
       expect {
-        post product_order_items_path(@product.id), params: new_item_hash
-      }.must_change 'OrderItem.count', 1
+        post product_order_items_path(@test_product1.id), 
+        params: new_item_hash
+      }.must_change "Product.find(#{@test_product1.id}).order_items.count", 2
+      
 
-      new_order_item = OrderItem.first
-      new_order = Order.first
+      found_order_item = OrderItem.find_by(order_id: session[:order_id])
+      #new_order = Order.first
 
-      expect(new_order_item.name).must_equal @product.name
-      expect(new_order_item.price).must_equal @product.price
-      expect(new_order_item.quantity).must_equal 1
-      expect(new_order_item.product_id).must_equal @product.id
-      expect(new_order_item.order_id).must_equal new_order.id
+      expect(found_order_item.name).must_equal new_item_hash[:order_item][:name]
+      expect(found_order_item.price).must_equal new_item_hash[:order_item][:price]
+      expect(found_order_item.quantity).must_equal new_item_hash[:order_item][:quantity]
+      expect(found_order_item.product_id).must_equal new_item_hash[:order_item][:product_id]
+      expect(found_order_item.order_id).must_equal session[:order_id]
 
-      must_redirect_to orders_path
+      must_redirect_to cart_path
     end
 
-    it "does not create a new OrderItem if the form data violates validations, and responds with a redirect" do
-      new_item_hash[:order_item][:name] = nil
+    it "does not create a new OrderItem if the form data violates inventory, and responds with a redirect" do
+      new_item_hash[:order_item][:quantity] = 1000
       
       expect {
-        post product_order_items_path(@product.id), params: new_item_hash
+        post product_order_items_path(@test_product1.id), params: new_item_hash
       }.wont_change 'OrderItem.count'
 
-      must_redirect_to product_order_items_path(@product.id)
+      must_redirect_to root_path
     end
   end
 
-  # describe "edit" do
-  #   before do
-  #     @driver = Driver.create(name: 'Leroy Jenkins', vin: 'SU9PYDRK6214WL15M', available: true)
-  #     @passenger = Passenger.create(name: "test person", phone_num: "1234567")
-  #   end
-
-  #   it "responds with success when getting the edit page for an existing, valid trip" do
-  #     trip = Trip.create(
-  #       passenger_id: @passenger.id,
-  #       driver_id: @driver.id,
-  #       date: Date.today,
-  #       rating: nil,
-  #       cost: rand(1...3000)
-  #     )
-
-  #     get edit_trip_path(trip.id)
-
-  #     must_respond_with :success
-  #   end
-
-  #   it "responds with redirect when getting the edit page for a non-existing trip" do
-  #     get edit_trip_path(-1)
-
-  #     must_respond_with :not_found
-  #   end
-  # end
-
-  describe "edit" do
-    it "responds with success when getting the edit page for an existing, valid order" do
-      get edit_orders_path(trip)
-      must_respond_with :success
-    end
-    
-    it "responds with redirect when getting the edit page for a non-existing order item" do
-      get edit_orders_path(-1)
-      must_redirect_to orders_path
-    end
-  end
 
   # describe "update" do
   #   before do
