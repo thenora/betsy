@@ -11,20 +11,21 @@ class ReviewsController < ApplicationController
 			product_id: params[:product_id]
 		)
 		
-		if @review.save!
+		if @review.save && (session[:user_id] != params[:merchant_id])
 			flash[:success] = "Your review was added."
-			redirect_back fallback_location: root_path
-			return
+		elsif (session[:user_id] == params[:merchant_id])
+			flash.now[:failure] = "You cannot review your own product."
 		else
 			flash.now[:failure] = "Error: Review could not be added."
-			redirect_back fallback_location: root_path
-			return
 		end
+
+		redirect_back fallback_location: root_path
+		return
 	end
 	
 	private
 
 	def review_params
-		return params.require(:review).permit(:title, :rating, :description, :product_id)
+		return params.require(:review).permit(:title, :rating, :description, :product_id, :merchant_id)
 	end
 end
