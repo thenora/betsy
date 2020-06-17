@@ -1,7 +1,14 @@
+# frozen_string_literal: true
+
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter '/bin/'
   add_filter '/db/'
+  add_filter '/jobs/'
+  add_filter '/mailers/'
+  add_filter '/helpers/'
+  add_filter '/channels/'
+  add_filter '/controllers/application_controller.rb'
   add_filter '/spec/' # for rspec
   add_filter '/test/' # for minitest
 end
@@ -9,16 +16,14 @@ end
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
-require "minitest/rails"
-require "minitest/reporters"  # for Colorized output
+require 'minitest/rails'
+require 'minitest/reporters' # for Colorized output
 #  For colorful output!
 Minitest::Reporters.use!(
   Minitest::Reporters::SpecReporter.new,
   ENV,
   Minitest.backtrace_filter
 )
-
-
 
 class ActiveSupport::TestCase
   # Run tests in parallel with specified workers
@@ -28,4 +33,15 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def mock_auth_hash(merchant)
+    return {
+      provider: merchant.provider,
+      uid: merchant.uid,
+      info: {
+        email: merchant.email,
+        nickname: merchant.username
+      }
+    }
+  end
 end

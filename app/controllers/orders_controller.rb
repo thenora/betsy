@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   
 		if @order.nil?
 			head :not_found
-		return
+			return
 		end
 	end
 
@@ -46,7 +46,6 @@ class OrdersController < ApplicationController
 	end
 
 	def checkout
-		# @cart = Order.find_by(cart_status: true)
 		@cart = Order.find_by(id: session[:order_id])
 		if @cart.nil? || @cart.order_items.length == 0		
 
@@ -69,7 +68,7 @@ class OrdersController < ApplicationController
 
 		@cart_items = @cart.order_items
 
-		Order.purchase_changes(@cart, @cart_items)
+		@cart.purchase_changes
 
 		session[:order_id] = nil
 	end

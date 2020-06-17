@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
-  get 'categories/index'
-  get 'categories/show'
-  get 'categories/new'
-  get 'categories/create'
-  get 'categories/edit'
-  get 'categories/update'
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'homepages#index'
 
@@ -22,6 +17,7 @@ Rails.application.routes.draw do
   #Merchant
   delete "/logout", to: "merchants#destroy", as: "logout"
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
+  resources :merchants, only: [:index, :show]
 
   #Order_Items
   resources :order_items, only: [:index, :create, :update, :destroy, :show]

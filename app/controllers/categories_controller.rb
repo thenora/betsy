@@ -7,7 +7,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.find_by(id: params[:id])# TODO make controller fixture
+    @category = Category.find_by(id: params[:id]) # TODO make controller fixture
     if @category.nil?
       head :not_found
       return

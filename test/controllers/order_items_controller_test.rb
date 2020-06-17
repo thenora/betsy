@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 describe OrderItemsController do
   before do
@@ -6,6 +8,7 @@ describe OrderItemsController do
       username: 'test_user',
       email: 'test_user@gmail.com'
     )
+
     @test_product1 = Product.create(
       name: 'test product1', 
       price: 5.00, 
@@ -100,10 +103,12 @@ describe OrderItemsController do
       }.wont_change 'OrderItem.count'
 
       must_redirect_to root_path
+
     end
   end
 
 
   #KATE WILL FINISH UPDATE AND DESTOY TESTS WEDNESDAY!!!!!!!#
+
 
 end
