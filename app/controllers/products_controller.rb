@@ -2,8 +2,7 @@ class ProductsController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
 
   def index
-    @products = Product.all
-    # TODO add status active
+    @products = Product.where(status: "true")
   end
 
   def new
