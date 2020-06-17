@@ -8,29 +8,31 @@
     <section id="product-listings-container">
       <% products = Product.where(merchant_id: @merchant.id)%>
       <% products.each do |product| %>
-        <ul class="product-listing">
-          <li>
-            <% if product.photo_url == nil || product.photo_url.length < 1  %>
-              <%= image_tag("https://www.creativefabrica.com/wp-content/uploads/2019/10/01/Plant-Flower-Leaf-Agriculture-Icon-by-Hoeda80-11-580x386.jpg", :alt => "generic plant black and white silhoutte") %>
-            <% else %>
-              <%= image_tag(product.photo_url, :alt => product.name ) %>
-            <% end %>
-            <div>
-              <h5>
-                <%= link_to product.name, product_path( product.id ) %>
-              </h5>
-            </div>
-            <div>
-              <h6>
-                Cost: $<%= sprintf('%.2f', product.price) %>
-              </h6>
-              <h6>
-                Inventory:
-                <%= product.inventory %>
-              </h6>
-            </div>
-          </li>
-        </ul>
+        <% if product.status == true %>
+          <ul class="product-listing">
+            <li>
+              <% if product.photo_url == nil || product.photo_url.length < 1  %>
+                <%= image_tag("https://www.creativefabrica.com/wp-content/uploads/2019/10/01/Plant-Flower-Leaf-Agriculture-Icon-by-Hoeda80-11-580x386.jpg", :alt => "generic plant black and white silhoutte") %>
+              <% else %>
+                <%= image_tag(product.photo_url, :alt => product.name ) %>
+              <% end %>
+              <div>
+                <h5>
+                  <%= link_to product.name, product_path( product.id ) %>
+                </h5>
+              </div>
+              <div>
+                <h6>
+                  Cost: $<%= sprintf('%.2f', product.price) %>
+                </h6>
+                <h6>
+                  Inventory:
+                  <%= product.inventory %>
+                </h6>
+              </div>
+            </li>
+          </ul>
+        <% end %>
       <% end %>
     </section>
   <% end %>
