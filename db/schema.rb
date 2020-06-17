@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 2020_06_17_014820) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "uid"
     t.string "provider"
+    t.bigint "order_id"
+    t.index ["order_id"], name: "index_merchants_on_order_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -63,7 +65,9 @@ ActiveRecord::Schema.define(version: 2020_06_17_014820) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "cart_status", default: true
+    t.bigint "merchant_id"
     t.string "state"
+    t.index ["merchant_id"], name: "index_orders_on_merchant_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -81,5 +85,6 @@ ActiveRecord::Schema.define(version: 2020_06_17_014820) do
 
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
+  add_foreign_key "orders", "merchants"
   add_foreign_key "products", "merchants"
 end

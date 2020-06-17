@@ -33,4 +33,15 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def mock_auth_hash(merchant)
+    return {
+      provider: merchant.provider,
+      uid: merchant.uid,
+      info: {
+        email: merchant.email,
+        nickname: merchant.username
+      }
+    }
+  end
 end
