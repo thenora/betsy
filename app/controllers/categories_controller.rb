@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CategoriesController < ApplicationController
   # skip_before_action :require_login, only: [:index, :show]
   # TODO add require login for everything but index and show
@@ -7,7 +9,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.find_by(id: params[:id]) # TODO make controller fixture
+    @category = Category.find_by(id: params[:id]) # TODO: make controller fixture
     if @category.nil?
       head :not_found
       return
@@ -19,7 +21,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new( category_params )
+    @category = Category.new(category_params)
     if @category.save
       flash[:success] = "#{@category.name} added."
       redirect_to categories_path
@@ -30,7 +32,7 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find_by(id: params[:id] )
+    @category = Category.find_by(id: params[:id])
     if @category.nil?
       flash[:error] = "Oops. Couldn't find that category."
       redirect_to categories_path
@@ -39,12 +41,12 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @category = Category.find_by(id: params[:id] )
+    @category = Category.find_by(id: params[:id])
     if @category.nil?
       flash[:error] = "Oops. Couldn't find that category."
       redirect_to categories_path
       return
-    elsif @category.update( category_params )
+    elsif @category.update(category_params)
       flash[:success] = "#{@category.name} updated."
       redirect_to category_path(@category.id)
     else
@@ -53,9 +55,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  private             
-  
+  private
+
   def category_params
-    return params.require(:category).permit(:name)
+    params.require(:category).permit(:name)
   end
 end

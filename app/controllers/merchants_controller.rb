@@ -1,5 +1,6 @@
-class MerchantsController < ApplicationController
+# frozen_string_literal: true
 
+class MerchantsController < ApplicationController
   def index
     @merchants = Merchant.all
   end
@@ -13,9 +14,9 @@ class MerchantsController < ApplicationController
   end
 
   def create
-    auth_hash = request.env["omniauth.auth"]
+    auth_hash = request.env['omniauth.auth']
 
-    merchant = Merchant.find_by(uid: auth_hash[:uid], provider: "github")
+    merchant = Merchant.find_by(uid: auth_hash[:uid], provider: 'github')
     if merchant
       flash[:success] = "Logged in as returning merchant #{merchant.username}"
     else
@@ -30,24 +31,23 @@ class MerchantsController < ApplicationController
     end
 
     session[:user_id] = merchant.id
-    return redirect_to root_path
+    redirect_to root_path
   end
-  
 
   def dashboard
-    @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
+    @merchant = Merchant.find_by(id: session[:user_id], provider: 'github')
   end
 
   def destroy
     session[:user_id] = nil
-    flash[:success] = "Successfully logged out!"
+    flash[:success] = 'Successfully logged out!'
 
     redirect_to root_path
   end
 
-  private             
-  
+  private
+
   def category_params
-    return params.require(:merchant).permit(:username, :email, :uid, :provider)
+    params.require(:merchant).permit(:username, :email, :uid, :provider)
   end
 end
