@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   belongs_to :merchant
   has_many :order_items
   has_and_belongs_to_many :categories
-  # has_many :reviews
+  has_many :reviews
 
   # ? Nora's thoughts: 
   # ? has_many :order_items
