@@ -30,6 +30,13 @@ class ProductsController < ApplicationController
       head :not_found
       return
     end
+
+    if @product.status == false && @product.merchant_id != session[:user_id]
+      flash[:error] = "Oops. That plant isn't available. Let's find you another beautiful plant."
+      redirect_to products_path
+      return
+
+    end 
   end
 
   def edit
