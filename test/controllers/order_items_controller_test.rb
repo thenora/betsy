@@ -38,7 +38,6 @@ describe OrderItemsController do
       expect(new_order_item.price).must_equal @product.price
       expect(new_order_item.quantity).must_equal 1
       expect(new_order_item.product_id).must_equal @product.id
-      expect(new_order_item.order_id).must_equal new_order.id
 
       must_redirect_to orders_path
     end
