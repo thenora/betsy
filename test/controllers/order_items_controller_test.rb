@@ -4,18 +4,8 @@ require 'test_helper'
 
 describe OrderItemsController do
   before do
-    @merchant = Merchant.create(
-      username: 'test_user',
-      email: 'test_user@gmail.com'
-    )
-
-    @test_product1 = Product.create(
-      name: 'test product1', 
-      price: 5.00, 
-      description: 'This is a fake plant.',
-      inventory: 5,
-      merchant_id: @merchant.id
-    )
+    @merchant = merchants(:merchant_1)
+    @test_product1 = products(:product_1)
     @new_order = Order.create(
       card_number: 1234567890123456, 
       card_expiration_date: Date.today + 365, 
@@ -45,7 +35,6 @@ describe OrderItemsController do
       product_id: @test_product1.id, 
       order_id: @new_order.id
     )
-
 
   end
 
