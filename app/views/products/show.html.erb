@@ -1,50 +1,49 @@
-<main>
-  <section class="product-show">
-    <% if @product.photo_url == nil  || @product.photo_url.length < 1  %>
-      <%= image_tag("https://www.creativefabrica.com/wp-content/uploads/2019/10/01/Plant-Flower-Leaf-Agriculture-Icon-by-Hoeda80-11-580x386.jpg", :alt => "generic plant silhouette", class: "product-image") %>
-    <% else %>
-      <%= image_tag(@product.photo_url, :alt => @product.name, class:"product-image") %>
-    <% end %>   
 
-    <section class="product-show-info">
-      <h2>
-        <%= @product.name %>
-      </h2>
+<section class="product-show">
+  <% if @product.photo_url == nil  || @product.photo_url.length < 1  %>
+    <%= image_tag("https://www.creativefabrica.com/wp-content/uploads/2019/10/01/Plant-Flower-Leaf-Agriculture-Icon-by-Hoeda80-11-580x386.jpg", :alt => "generic plant silhouette", class: "product-image") %>
+  <% else %>
+    <%= image_tag(@product.photo_url, :alt => @product.name, class:"product-image") %>
+  <% end %>   
 
-      <ul>
-        <li>
-          <h3><%= number_to_currency(@product.price) %></h3>
-        </li>
-        <li>
-          <strong>Stock: </strong><%= @product.inventory %>
-        </li>
-        <li>
-          <%= @product.description %>
-        </li>
-      </ul>
+  <section class="product-show-info">
+    <h2>
+      <%= @product.name %>
+    </h2>
 
-      <%= form_for :order_item, url: product_order_items_path(@product.id)  do |f| %>
-      <div class="product-submit-quantity">
-        <section>
-          <strong><%= f.label :quantity %></strong><br>
-          <%= f.text_field :quantity %>
-        </section>
-        <%= f.hidden_field :name, :value => @product.name %>
-        <%= f.hidden_field :price, :value => @product.price %>
-        <%= f.hidden_field :photo_url, :value => @product.photo_url %>
-        <section>
-          <%= f.submit 'Add to Cart', class:"btn btn-info" %>
-        </section>
-      </div>
+    <ul>
+      <li>
+        <h3><%= number_to_currency(@product.price) %></h3>
+      </li>
+      <li>
+        <strong>Stock: </strong><%= @product.inventory %>
+      </li>
+      <li>
+        <%= @product.description %>
+      </li>
+    </ul>
 
-    
-      <% if @product.merchant_id == session[:user_id] %>
-        <p> 
-          <%= link_to "Edit this product listing", edit_product_path(@product.id) %> 
-        </p>
-      <% end %>
-    </section>
+    <%= form_for :order_item, url: product_order_items_path(@product.id)  do |f| %>
+    <div class="product-submit-quantity">
+      <section>
+        <strong><%= f.label :quantity %></strong><br>
+        <%= f.text_field :quantity %>
+      </section>
+      <%= f.hidden_field :name, :value => @product.name %>
+      <%= f.hidden_field :price, :value => @product.price %>
+      <%= f.hidden_field :photo_url, :value => @product.photo_url %>
+      <section>
+        <%= f.submit 'Add to Cart', class:"btn btn-info" %>
+      </section>
+    </div>
+
+  
+    <% if @product.merchant_id == session[:user_id] %>
+      <p> 
+        <%= link_to "Edit this product listing", edit_product_path(@product.id) %> 
+      </p>
     <% end %>
-
   </section>
-</main>
+  <% end %>
+
+</section>

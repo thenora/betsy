@@ -1,5 +1,17 @@
 class MerchantsController < ApplicationController
 
+  def index
+    @merchants = Merchant.all
+  end
+
+  def show
+    @merchant = Merchant.find_by(id: params[:id])
+    if @merchant.nil?
+      head :not_found
+      return
+    end
+  end
+
   def create
     auth_hash = request.env["omniauth.auth"]
 
@@ -20,6 +32,7 @@ class MerchantsController < ApplicationController
     session[:user_id] = merchant.id
     return redirect_to root_path
   end
+  
 
   def dashboard
     @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
@@ -32,4 +45,9 @@ class MerchantsController < ApplicationController
     redirect_to root_path
   end
 
+  private             
+  
+  def category_params
+    return params.require(:merchant).permit(:username, :email, :uid, :provider)
+  end
 end
