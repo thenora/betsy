@@ -6,7 +6,7 @@ class MerchantsController < ApplicationController
 
   def show
     @merchant = Merchant.find_by(id: params[:id])
-    if @user.nil?
+    if @merchant.nil?
       head :not_found
       return
     end
@@ -45,4 +45,9 @@ class MerchantsController < ApplicationController
     redirect_to root_path
   end
 
+  private             
+  
+  def category_params
+    return params.require(:merchant).permit(:username, :email, :uid, :provider)
+  end
 end
