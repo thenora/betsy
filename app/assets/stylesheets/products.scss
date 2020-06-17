@@ -32,21 +32,28 @@
 .product-show {
 	display: grid;
 	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr auto;
+	grid-template-areas: "image info" "reviews reviews";
 }
 
-.product-show img {
-	grid-column: 1 / 2;
-	margin-right: 3em;
+.product-image {
+	grid-area: image;
+	margin: 0 7em 0 2em;
 	width: 35em;
 }
 
 .product-show-info {
-	grid-column: 2 / 3;
+	grid-area: info;
 }
 
 .product-show-info ul {
 	list-style-type: none;
 	padding: 0;
+}
+
+.product-reviews {
+	grid-area: reviews;
+	margin-top: 3em;
 }
 
 .product-submit-quantity {
