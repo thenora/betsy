@@ -3,8 +3,16 @@ class OrderItemsController < ApplicationController
 	#database order_items -> use OrderItem
 	#GET /order_items
 	def index
-		order_items = OrderItem.all.as_json(only: [:id, :name, :price, :quantity])
-		render json: order_items, status: :ok
+		if params[:product_id]
+      # This is the nested route, /products/:product_id/order_items
+      product = Product.find_by(id: params[:product_id])
+			order_items = product.order_items.as_json(only: [:id, :name, :price, :quantity])
+			render json: order_items, status: :ok
+    else
+      # This is the 'regular' route, /order_items
+      order_items = OrderItem.all.as_json(only: [:id, :name, :price, :quantity])
+			render json: order_items, status: :ok
+		end
 	end
 	
 	#POST /order_items  { :order_item => { :name => "hello", :price => 6, }}
