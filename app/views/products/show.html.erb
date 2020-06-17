@@ -4,7 +4,7 @@
     <%= image_tag("https://www.creativefabrica.com/wp-content/uploads/2019/10/01/Plant-Flower-Leaf-Agriculture-Icon-by-Hoeda80-11-580x386.jpg", :alt => "generic plant silhouette", class: "product-image") %>
   <% else %>
     <%= image_tag(@product.photo_url, :alt => @product.name, class:"product-image") %>
-  <% end %>   
+  <% end %>
 
   <section class="product-show-info">
     <h2>
@@ -37,10 +37,10 @@
       </section>
     </div>
 
-  
+
     <% if @product.merchant_id == session[:user_id] %>
-      <p> 
-        <%= link_to "Edit this product listing", edit_product_path(@product.id) %> 
+      <p>
+        <%= link_to "Edit this product listing", edit_product_path(@product.id) %>
       </p>
     <% end %>
   </section>
