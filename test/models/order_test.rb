@@ -154,4 +154,22 @@ describe Order do
     end
   end
 
-end #Order
+  describe "cart item count" do
+    before do
+      @session = {} # imitate session
+      @session[:order_id] = nil
+    end
+
+    it "returns the number of items in cart" do
+      new_order = orders(:order3)
+      @session[:order_id] = new_order.id
+
+      expect(Order.cart_item_count(@session)).must_equal 2
+    end
+
+    it "returns 0 if no cart has been made" do
+      expect(Order.cart_item_count(@session)).must_equal '0'
+    end
+  end
+
+end
