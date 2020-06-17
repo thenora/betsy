@@ -5,7 +5,7 @@ product_1:
   inventory: 5
   merchant: merchant_1
   status: true
-  photo_url: "https://www.goodfreephotos.com/albums/plants/phyllotaxis-plant-spiral.jpg",
+  photo_url: "https://www.goodfreephotos.com/albums/plants/phyllotaxis-plant-spiral.jpg"
   categories: category1, category2
 product_2:
   name: "Product 2"
