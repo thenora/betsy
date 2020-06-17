@@ -46,7 +46,7 @@
 	grid-area: info;
 }
 
-.product-show-info ul {
+.product-show-info ul, .product-reviews ul {
 	list-style-type: none;
 	padding: 0;
 }
@@ -54,6 +54,24 @@
 .product-reviews {
 	grid-area: reviews;
 	margin-top: 3em;
+	text-align: center;
+}
+
+.product-reviews h3, .product-reviews h4 {
+	margin: 1.5em 0 1em;
+}
+
+.product-reviews h5 {
+	color: darkolivegreen;
+}
+
+.product-reviews ul {
+	border-bottom: 1px solid darkolivegreen;
+	padding-bottom: 1em;
+}
+
+.product-reviews input, .product-reviews textarea {
+	width: 50vw;
 }
 
 .product-submit-quantity {
