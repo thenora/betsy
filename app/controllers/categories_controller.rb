@@ -1,6 +1,5 @@
 class CategoriesController < ApplicationController
-  # skip_before_action :require_login, only: [:index, :show]
-  # TODO add require login for everything but index and show
+  skip_before_action :require_login, only: [:index, :show]
 
   def index
     @categories = Category.all
