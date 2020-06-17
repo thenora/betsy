@@ -2,7 +2,7 @@
 
 class Order < ApplicationRecord
   has_many :order_items
-  has_many :merchants # TODO REMOVE THIS
+  has_many :merchants, through: :products
   has_many :products, through: :order_items
 
   validates :card_number,
