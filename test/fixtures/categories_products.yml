@@ -1,0 +1,15 @@
+one:
+  category_id: 1
+  product_id: 1
+two:
+  category_id: 2
+  product_id: 1
+three:
+  category_id: 2
+  product_id: 3
+four:
+  category_id: 3
+  product_id: 2
+five:
+  category_id: 4
+  product_id: 2

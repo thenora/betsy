@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :merchant
-  has_one :order_item
+  has_many :order_items
   has_and_belongs_to_many :categories
   #need to clarify this because if there's 10 plants and all get purchased, should see 10 order items
   #product has many order items.... 

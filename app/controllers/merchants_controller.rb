@@ -1,4 +1,5 @@
 class MerchantsController < ApplicationController
+  skip_before_action :require_login, except: [:dashboard]
 
   def index
     @merchants = Merchant.all
