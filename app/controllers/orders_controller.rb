@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   
 		if @order.nil?
 			head :not_found
-		return
+			return
 		end
 	end
 
