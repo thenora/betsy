@@ -24,6 +24,7 @@
         <th>Price</th>
         <th>Quantity</th>
         <th>Product</th>
+        <th>Status</th>
       </tr>
     </thead>
     <tbody>
@@ -34,6 +35,7 @@
           <td><%= merchant_item.price %></td>
           <td><%= merchant_item.quantity %></td>
           <td><%= merchant_item.product.name %></td>
+          <td><%= merchant_item.status %></td>
         </tr>
       <% end %>
       </tbody>
