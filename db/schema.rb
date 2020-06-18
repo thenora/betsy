@@ -65,8 +65,8 @@ ActiveRecord::Schema.define(version: 2020_06_17_220004) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "cart_status", default: true
-    t.bigint "merchant_id"
     t.string "state"
+    t.bigint "merchant_id"
     t.index ["merchant_id"], name: "index_orders_on_merchant_id"
   end
 
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 2020_06_17_220004) do
     t.index ["product_id"], name: "index_reviews_on_product_id"
   end
 
+  add_foreign_key "merchants", "orders"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "merchants"

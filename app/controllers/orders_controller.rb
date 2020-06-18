@@ -1,11 +1,9 @@
 class OrdersController < ApplicationController
 	skip_before_action :require_login, except: [:show, :index]
-
+	before_action :find_cart_order, only: [:cart, :confirmation]
 	#GET /orders
 	def index
 		@orders = Order.all
-		#  order = Order.all.as_json(only: [:id, :card_number,:card_expiration_date, :card_cvv, :address, :city,:zip_code, :guest_name, :email, :phone_num, :cart_status])
-		# render json: order, status: :ok
 	end
 		
 	#GET /orders/:id
@@ -16,7 +14,6 @@ class OrdersController < ApplicationController
 			head :not_found
 			return
 		end
-		# merchant = Merchant.find_by(id: session[:user_id])
 		@merchant_items = []
 
 		@order.order_items.each do |order_item|
