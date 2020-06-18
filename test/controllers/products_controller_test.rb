@@ -112,7 +112,7 @@ describe ProductsController do
       valid_product_id = product_1.id
   
       # Act
-      get "/products/#{valid_product_id}"
+      get product_path(valid_product_id)
   
       # Assert
       must_respond_with :success
@@ -123,7 +123,7 @@ describe ProductsController do
       invalid_product_id = 999
   
       # Act
-      get "/products/#{invalid_product_id}"
+      get product_path(invalid_product_id)
   
       # Assert
       must_respond_with :not_found

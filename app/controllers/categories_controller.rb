@@ -6,7 +6,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.find_by(id: params[:id]) # TODO make controller fixture
+    @category = Category.find_by(id: params[:id])
     if @category.nil?
       head :not_found
       return
@@ -28,29 +28,7 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def edit
-    @category = Category.find_by(id: params[:id] )
-    if @category.nil?
-      flash[:error] = "Oops. Couldn't find that category."
-      redirect_to categories_path
-      return
-    end
-  end
-
-  def update
-    @category = Category.find_by(id: params[:id] )
-    if @category.nil?
-      flash[:error] = "Oops. Couldn't find that category."
-      redirect_to categories_path
-      return
-    elsif @category.update( category_params )
-      flash[:success] = "#{@category.name} updated."
-      redirect_to category_path(@category.id)
-    else
-      flash.now[:error] = "#{@category.name} wasn't updated."
-      render :edit, status: :bad_request
-    end
-  end
+  # TODO change route resources to not include edit / update
 
   private             
   

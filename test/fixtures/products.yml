@@ -15,7 +15,7 @@ product_2:
   merchant: merchant_2
   status: true
   photo_url: "https://cdn.pixabay.com/photo/2019/04/16/02/40/plant-4130769_960_720.png"
-  categories: category2, category3, category4
+  categories: category4, category5
 product_3:
   name: "Product 3"
   price: 8.99
@@ -24,3 +24,4 @@ product_3:
   merchant: merchant_1
   status: false
   photo_url: "https://p1.piqsels.com/preview/5/143/671/fittonia-variegated-leaves-indoor-plant-mottled-home-flower-house-plant.jpg"
+  categories: category3
