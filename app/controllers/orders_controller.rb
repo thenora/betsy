@@ -54,8 +54,6 @@ class OrdersController < ApplicationController
 	end
 
 	def checkout
-		@cart = Order.find_by(id: session[:order_id])
-
 		if @cart.nil? || @cart.order_items.length == 0		
 			flash[:failure] = "Unable to checkout."
 			redirect_to cart_path
@@ -66,8 +64,6 @@ class OrdersController < ApplicationController
 	end
 
 	def confirmation
-		@cart = Order.find_by(id: session[:order_id])
-
 		if @cart.nil? || @cart.order_items.length == 0
 			flash[:error] = "Unable to checkout."
 			redirect_to cart_path
@@ -83,6 +79,11 @@ class OrdersController < ApplicationController
 
 	def orders_params
 		return params.require(:order).permit(:guest_name, :email, :phone_num, :address, :city, :state, :zip_code, :card_number, :card_expiration_date, :card_cvv)
+	end
+
+	#controller filter
+	def find_cart_order
+  	@cart = Order.find_by(id: session[:order_id])
 	end
 
 end
