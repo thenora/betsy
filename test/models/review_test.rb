@@ -7,56 +7,60 @@ describe Review do
       title: 'So Good',
       rating: 5,
       description: 'How did I get such a perfect plant',
-      merchant_id: merchants(:merchant_1).id
+      product_id: products(:product_1).id
     )
   }
   
-  # it "can be instantiated" do
-  #   expect(new_user.valid?).must_equal true
-  # end
+  it "can be instantiated" do
+    expect(new_review.valid?).must_equal true
+  end
 
-  # it "will have the required fields" do
-  #   new_user.save
-  #   expect(User.first).must_respond_to :username
-  # end
+  it "will have the required fields" do
+    new_review.save
 
-  # it "will not let you create two users with the same username" do
-  #   invalid = User.new(username: 'tails')
+    expect(Review.first).must_respond_to :title
+    expect(Review.first).must_respond_to :rating
+    expect(Review.first).must_respond_to :description
+    expect(Review.first).must_respond_to :product_id
+  end
 
-  #   expect(invalid.valid?).must_equal false
-  #   expect(invalid.errors.messages).must_include :username
-  #   expect(invalid.errors.messages[:username]).must_equal ["has already been taken"]
-  # end
+  describe "relationships" do
+    it "review can have product" do
+      new_review.save
 
-  # describe "relationships" do
-  #   before do
-  #     Vote.all.each do |vote|
-  #       Vote.destroy(vote.id)
-  #     end
-  #   end
-    
-  #   it "user can have work" do
-  #     new_vote = Vote.create(user_id: User.find_by(username: 'wizard').id, work_id: Work.find_by(title: 'Dark Star').id)
+      expect(new_review.product).must_be_instance_of Product
+      expect(new_review.product.name).must_equal "Product 1"
+    end
 
-  #     expect(Work.find_by(title: 'Dark Star').votes.count).must_equal 1
-  #     expect(new_vote.work).must_be_instance_of Work
-  #   end
+    it "product can have review" do
+      new_review.save
 
-  #   it "user can have vote" do
-  #     new_vote = Vote.create(user_id: User.find_by(username: 'witch').id, work_id: Work.find_by(title: 'Spilt Nuts').id)
+      expect(Product.find_by(id: new_review.product_id).reviews.count).must_equal 1
+      expect(Product.find_by(id: new_review.product_id).reviews[0]).must_be_instance_of Review
+    end 
+  end
 
-  #     expect(User.find_by(username: 'witch').votes.count).must_equal 1
-  #     expect(new_vote.user).must_be_instance_of User
-  #   end 
-  # end
+  describe "validations" do
+    it "must have a title" do
+      new_review.title = nil
 
-  # describe "validations" do
-  #   it "must have a username" do
-  #     new_user.username = nil
+      expect(new_review.valid?).must_equal false
+      expect(new_review.errors.messages).must_include :title
+    end
 
-  #     expect(new_user.valid?).must_equal false
-  #     expect(new_user.errors.messages).must_include :username
-  #   end
-  # end
+    it "must have a rating" do
+      new_review.rating = nil
+
+      expect(new_review.valid?).must_equal false
+      expect(new_review.errors.messages).must_include :rating
+    end
+
+    it "must have a description" do
+      new_review.description = nil
+
+      expect(new_review.valid?).must_equal false
+      expect(new_review.errors.messages).must_include :description
+    end
+  end
 
 end
