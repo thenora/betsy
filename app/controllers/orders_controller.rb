@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 	skip_before_action :require_login, except: [:show, :index]
-	before_action :find_cart_order, only: [:cart, :confirmation]
+	before_action :find_cart_order, only: [:cart, :checkout, :confirmation]
 	#GET /orders
 	def index
 		@orders = Order.all
@@ -8,8 +8,8 @@ class OrdersController < ApplicationController
 		
 	#GET /orders/:id
 	def show
-
-    @order = Order.find_by(id: params[:id])
+		@order = Order.find_by(id: params[:id])
+		
 		if @order.nil?
 			head :not_found
 			return
@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
 	end
 
 	def update
-		@open_order = Order.find_by(cart_status: true)
+		@open_order = Order.find_by(id: session[:order_id])
 
 		if @open_order.nil?
 			head :not_found
