@@ -1,7 +1,11 @@
-<h2>Merchant Dashboard</h2>
+<h2><%= @merchant.username %>'s Dashboard</h2>
 
 <section>
   <% unless @merchant.nil? %>
+
+  <%# <section>
+    <h3>Total Earnings: <%= @total_revenue %> 
+  <%# </section> %>
 
   <section>
     <%= link_to "Add a product", new_product_path %>
@@ -15,7 +19,7 @@
       </ul>
     <% end %>
 
-    <h4>Your Products:</h4>
+    <h3>Your Products:</h3>
 
     <% if @merchant.products.length > 0 %>
       <ul>

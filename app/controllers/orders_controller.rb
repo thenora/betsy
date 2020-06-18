@@ -10,7 +10,8 @@ class OrdersController < ApplicationController
 	#GET /orders/:id
 	def show
 		order_id = params[:id].to_i
-    @order = Order.find_by_id(order_id)
+		merchant_id = session[:user_id].to_i
+    @order = Order.find_by_id(merchant_id, order_id)
   
 		if @order.nil?
 			head :not_found

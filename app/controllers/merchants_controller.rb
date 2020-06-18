@@ -42,6 +42,7 @@ class MerchantsController < ApplicationController
     #   flash[:error] = "You are not authorized to view this page"
     else
       @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
+      # @total_revenue = Merchant.total_revenue
     end
   end
 
