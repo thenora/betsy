@@ -24,7 +24,7 @@
 
         <section class="navigation-bar--right-side">
           <% if session[:user_id] %>
-            <%= link_to "Dashboard", dashboard_path(session[:user_id]) %>
+            <%= link_to "Dashboard", dashboard_path %>
             |
             <%= link_to "Log out", logout_path, method: "delete" %>
           <% else %>

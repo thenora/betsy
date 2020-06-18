@@ -1,23 +1,28 @@
-<h2>Merchant Dashboard</h2>
+<h2><%= @merchant.username %>'s Dashboard</h2>
 
 <section>
   <% unless @merchant.nil? %>
   # TODO add require login as a controller filter -i think?
 
+  <%# <section>
+    <h3>Total Earnings: <%= @total_revenue %> 
+  <%# </section> %>
+
   <section>
     <%= link_to "Add a product", new_product_path %>
     <%= link_to "Add a category", new_category_path %>
+    Total Earnings: $ <%= @merchant.total_revenue %>
     <h3>Your Orders:</h3>
 
-    <% if @merchant.orders.length > 0 %>
+    <% if @merchant.order_items.length > 0 %>
       <ul>
-      <% @merchant.orders.each do |order| %>
-        <li>Order ID: <%= link_to order[:id], order_path(order.id), method: :get  %></li>
+      <% @merchant.order_items.each do |order_item| %>
+        <li>Order: <%= link_to order_item[:id], order_path(order_item.order.id), method: :get  %></li>
       <% end %>
       </ul>
     <% end %>
 
-    <h4>Your Products:</h4>
+    <h3>Your Products:</h3>
 
     <% if @merchant.products.length > 0 %>
       <ul>
