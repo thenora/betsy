@@ -2,6 +2,7 @@ class OrderItemsController < ApplicationController
 	skip_before_action :verify_authenticity_token
 	skip_before_action :require_login
 
+	before_action :find_order_item, only: [:update, :destroy]
 	#database order_items -> use OrderItem
 	#GET /order_items
 	def index
@@ -24,29 +25,22 @@ class OrderItemsController < ApplicationController
 			product_id: params[:product_id],
 			photo_url: order_items_params[:photo_url]
 		)
-
 		if session[:order_id]
 			@open_order = Order.find_by(id: session[:order_id])
 			@new_item.order_id = @open_order.id
-
-			p "SESSION IS HERE"
 		else
 			@new_order = Order.create
 			session[:order_id] = @new_order.id
 			@new_item.order_id = @new_order.id
-
-			p "CREATE A SESSION"
 		end
 
 		if @new_item.check_product_inventory
 			@new_item.check_order_item_existence(session[:order_id])
 			@new_item.reduce_inventory
-			p "ITEM WAS ADD"
 			flash[:success] = 'Item added to cart.'
 			redirect_to cart_path
 			return
 		else
-			p "ITEM WAS not ADDED"
 			flash[:failure] = 'Not enough product inventory.'
 			redirect_back fallback_location: root_path
 			return
@@ -55,29 +49,25 @@ class OrderItemsController < ApplicationController
 
 	# PATCH:  /order_items/:id (params)
 	def update
-		@order_item = OrderItem.find_by(id: params[:id])
-
-		p params
+		# @order_item = OrderItem.find_by(id: params[:id])
 		if @order_item.nil?
 			head :not_found
 			return
 		elsif @order_item.update_product_inventory(order_items_params[:quantity])
-			p "herereee?"
 			@order_item.update(order_items_params)
 			flash[:success] = 'Order item quantity updated.'
 			redirect_to cart_path
 			return
 		else
-			p "here?"
 			flash[:failure] = 'Not enough inventory to update quantity.'
 			redirect_to cart_path
 			return
 		end
 	end
 
-	# DElETE  /order_items/:id
+	# DELETE  /order_items/:id
 	def destroy
-		@order_item = OrderItem.find_by(id: params[:id])
+		# @order_item = OrderItem.find_by(id: params[:id])
 
 		if @order_item.nil?
 			head :not_found
@@ -98,11 +88,19 @@ class OrderItemsController < ApplicationController
 		redirect_to cart_path
 		return
 	end
+end #class
 
-	private
 
-	def order_items_params
-		return params.require(:order_item).permit(:name, :price, :quantity, :photo_url, :product_id, :order_id)
-	end
+private
 
+def order_items_params
+	return params.require(:order_item).permit(:name, :price, :quantity, :photo_url, :product_id, :order_id)
 end
+
+#controller filter
+def find_order_item
+	@order_item = OrderItem.find_by(id: params[:id])
+end
+
+
+
