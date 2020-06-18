@@ -65,15 +65,19 @@ class OrderItemsController < ApplicationController
 	# PATCH:  /order_items/:id (params)
 	def update
 		@order_item = OrderItem.find_by(id: params[:id])
+
+		p params
 		if @order_item.nil?
 			head :not_found
 			return
-		elsif @order_item.check_product_inventory
+		elsif @order_item.update_product_inventory(order_items_params[:quantity])
+			p "herereee?"
 			@order_item.update(order_items_params)
 			flash[:success] = 'Order item quantity updated.'
 			redirect_to cart_path
 			return
 		else
+			p "here?"
 			flash[:failure] = 'Not enough inventory to update quantity.'
 			redirect_to cart_path
 			return
