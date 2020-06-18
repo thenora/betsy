@@ -12,6 +12,10 @@ class OrdersController < ApplicationController
 	def show
 
     @order = Order.find_by(id: params[:id])
+		if @order.nil?
+			head :not_found
+			return
+		end
 		# merchant = Merchant.find_by(id: session[:user_id])
 		@merchant_items = []
 
@@ -19,11 +23,6 @@ class OrdersController < ApplicationController
 			if order_item.product.merchant_id == session[:user_id]
 				@merchant_items << order_item
 			end
-		end
-  
-		if @order.nil?
-			head :not_found
-			return
 		end
 	end
 
