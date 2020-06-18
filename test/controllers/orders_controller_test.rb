@@ -84,6 +84,7 @@ describe OrdersController do
         patch order_path(new_order.id), params: update_hash
       }.wont_change 'Order.count'
 
+      p new_order
       must_respond_with :redirect
       must_redirect_to confirmation_path
 

@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
 	skip_before_action :require_login, except: [:show, :index]
-	before_action :find_cart_order, only: [:cart, :confirmation]
+	before_action :find_cart_order, only: [:cart, :checkout, :confirmation]
 	#GET /orders
 	def index
 		@orders = Order.all
