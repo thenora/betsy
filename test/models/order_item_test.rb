@@ -53,16 +53,20 @@ describe OrderItem do
   end
 
   describe "reduce inventory" do
-    
+    it "reduces correctly" do
+      expect{@valid_order_item.reduce_inventory}.must_change "Product.find(#{@valid_order_item.product.id}).inventory", 0 - @valid_order_item.quantity
+    end
   end
 
   describe "add inventory" do
-    
-
+    it "adds correctly" do
+      expected_inventory = @valid_order_item.quantity + @valid_order_item.product.inventory #5 +5
+      # @valid_order_item.add_inventory
+      # @valid_order_item.reload #resync w/ DB
+      # new_inventory = @valid_order_item.product.inventory
+      # expect(@valid_order_item.product.inventory).must_equal expected_inventory
+      expect{@valid_order_item.add_inventory}.must_change "Product.find(#{@valid_order_item.product.id}).inventory", @valid_order_item.quantity
+    end
   end
-
-
-
-
 end
 
