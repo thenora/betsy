@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 describe OrderItemsController do
@@ -32,7 +30,6 @@ describe OrderItemsController do
       get product_order_items_path(@test_product1.id)
       must_respond_with :success
       body = JSON.parse(response.body)
-      puts body
       expect(body.length).must_equal 2
       expect(body[0]["name"]).must_equal @test_product1.name
     end
@@ -41,13 +38,10 @@ describe OrderItemsController do
   describe "create" do
     it "can create a new OrderItem with valid information accurately, and redirect" do
       expect {
-        post product_order_items_path(@test_product1.id), 
-        params: new_item_hash
+        post product_order_items_path(@test_product1.id), params: new_item_hash
       }.must_change "Product.find(#{@test_product1.id}).order_items.count", 2
       
-
       found_order_item = OrderItem.find_by(order_id: session[:order_id])
-      #new_order = Order.first
 
       expect(found_order_item.name).must_equal new_item_hash[:order_item][:name]
       expect(found_order_item.price).must_equal new_item_hash[:order_item][:price]
@@ -66,12 +60,66 @@ describe OrderItemsController do
       }.wont_change 'OrderItem.count'
 
       must_redirect_to root_path
-
     end
   end
 
+  describe "update" do
 
-  #KATE WILL FINISH UPDATE AND DESTOY TESTS WEDNESDAY!!!!!!!#
+    let (:update_hash) {
+      {
+        order_item: {
+          quantity: 3,
+        }
+      }
+    }
 
+    it "can update an existing order item, creates a flash, then redirects" do
+      expect {
+        patch order_item_path(@new_order_item.id), params: update_hash
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+
+    it "does not update if there is not enough inventory" do
+      update_hash[:order_item][:quantity] = 1000000
+
+      expect {
+        patch order_item_path(@new_order_item.id), params: update_hash
+      }.wont_change "OrderItem.count"
+
+      expect(flash[:failure]).must_equal 'Not enough inventory to update quantity.'
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+
+    it "renders 404 not_found, does not update in the DB for nil input" do
+      expect {
+        patch order_item_path(-1), params: update_hash
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :not_found
+    end
+  end
+
+  describe "destroy" do
+    it "destroys an existing order item, creates a flash, then redirects" do
+      expect{
+        delete order_item_path(@new_order_item.id)
+      }.must_change "OrderItem.count", -1
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+
+    it "renders 404 not_found, does not destroy in the DB for invalid order item" do
+      expect {
+        delete order_item_path(-1)
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :not_found
+    end
+  end
 
 end

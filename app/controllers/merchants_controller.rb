@@ -23,7 +23,7 @@ class MerchantsController < ApplicationController
     else
       merchant = Merchant.build_from_github(auth_hash)
 
-      if merchant.save!
+      if merchant.save
         flash[:success] = "Logged in as new merchant #{merchant.username}"
       else
         flash[:error] = "Could not create new merchant account: #{merchant.errors.messages}"
@@ -44,6 +44,7 @@ class MerchantsController < ApplicationController
     #   flash[:error] = "You are not authorized to view this page"
     else
       @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
+      @total_revenue = @merchant.total_revenue
     end
   end
 

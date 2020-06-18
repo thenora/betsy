@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 # /product/1/order_items
   resources :products do 
     resources :order_items
+    resources :reviews, only: [:new, :create]
   end
 
+  #Login
   get "/auth/github", as: "github_login"
   get "/auth/:provider/callback", to: "merchants#create"
 

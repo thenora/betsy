@@ -32,21 +32,46 @@
 .product-show {
 	display: grid;
 	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr auto;
+	grid-template-areas: "image info" "reviews reviews";
 }
 
-.product-show img {
-	grid-column: 1 / 2;
-	margin-right: 3em;
+.product-image {
+	grid-area: image;
+	margin: 0 7em 0 2em;
 	width: 35em;
 }
 
 .product-show-info {
-	grid-column: 2 / 3;
+	grid-area: info;
 }
 
-.product-show-info ul {
+.product-show-info ul, .product-reviews ul {
 	list-style-type: none;
 	padding: 0;
+}
+
+.product-reviews {
+	grid-area: reviews;
+	margin-top: 3em;
+	text-align: center;
+}
+
+.product-reviews h3, .product-reviews h4 {
+	margin: 1.5em 0 1em;
+}
+
+.product-reviews h5 {
+	color: darkolivegreen;
+}
+
+.product-reviews ul {
+	border-bottom: 1px solid darkolivegreen;
+	padding-bottom: 1em;
+}
+
+.product-reviews input, .product-reviews textarea {
+	width: 50vw;
 }
 
 .product-submit-quantity {

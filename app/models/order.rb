@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Order < ApplicationRecord
   has_many :order_items
   has_many :merchants, through: :products
@@ -49,7 +47,6 @@ class Order < ApplicationRecord
 
   validates :phone_num,
             presence: true,
-            format: { with: /\([0-9]{3}\)[0-9]{3}-[0-9]{4}/ },
             on: :update
 
   def total_price
@@ -68,9 +65,7 @@ class Order < ApplicationRecord
   end
 
   def self.cart_item_count(session)
-    if session[:order_id] == nil
-      '0'
-    elsif Order.find_by(id: session[:order_id]).nil?
+    if session[:order_id] == nil || Order.find_by(id: session[:order_id]).nil?
       '0'
     else
       return Order.find_by(id: session[:order_id]).order_items.length

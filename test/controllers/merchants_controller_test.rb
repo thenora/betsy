@@ -59,7 +59,7 @@ describe MerchantsController do
 
       session[:user_id].must_equal merchant.id
 
-      User.count.must_equal start_count
+      Merchant.count.must_equal start_count
     end
   end
 

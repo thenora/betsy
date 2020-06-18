@@ -10,8 +10,16 @@ class OrdersController < ApplicationController
 		
 	#GET /orders/:id
 	def show
-		order_id = params[:id].to_i
-    @order = Order.find_by_id(order_id)
+
+    @order = Order.find_by(id: params[:id])
+		# merchant = Merchant.find_by(id: session[:user_id])
+		@merchant_items = []
+
+		@order.order_items.each do |order_item|
+			if order_item.product.merchant_id == session[:user_id]
+				@merchant_items << order_item
+			end
+		end
   
 		if @order.nil?
 			head :not_found
@@ -29,6 +37,7 @@ class OrdersController < ApplicationController
 			redirect_to confirmation_path
       return
 		else
+			p @open_order.errors
 			flash[:error] = 'Order could not be placed.'
 			redirect_to checkout_path
       return
@@ -38,7 +47,6 @@ class OrdersController < ApplicationController
 	def cart # show function for the open order at the moment
 		if !session[:order_id].nil?
 			@open_order = Order.find_by(id: session[:order_id])
-			p @open_order
 		end
 
 		if !@open_order.nil?
@@ -48,8 +56,8 @@ class OrdersController < ApplicationController
 
 	def checkout
 		@cart = Order.find_by(id: session[:order_id])
-		if @cart.nil? || @cart.order_items.length == 0		
 
+		if @cart.nil? || @cart.order_items.length == 0		
 			flash[:failure] = "Unable to checkout."
 			redirect_to cart_path
       return
@@ -68,9 +76,7 @@ class OrdersController < ApplicationController
 		end
 
 		@cart_items = @cart.order_items
-
 		@cart.purchase_changes
-
 		session[:order_id] = nil
 	end
 
