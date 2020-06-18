@@ -56,7 +56,9 @@
             <h5><%= review.title %></h5>
           </li>
           <li>
-            <%= review.rating %>
+            <% review.rating.times do %>
+              ★
+            <% end %>
           </li>
           <li>
             <%= review.description %>
