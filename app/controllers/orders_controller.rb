@@ -10,8 +10,7 @@ class OrdersController < ApplicationController
 		
 	#GET /orders/:id
 	def show
-		order_id = params[:id].to_i
-    @order = Order.find_by_id(order_id)
+    @order = Order.find_by(id: params[:id])
   
 		if @order.nil?
 			head :not_found
