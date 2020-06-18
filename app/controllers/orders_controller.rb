@@ -11,8 +11,16 @@ class OrdersController < ApplicationController
 	#GET /orders/:id
 	def show
 		order_id = params[:id].to_i
-		merchant_id = session[:user_id].to_i
-    @order = Order.find_by_id(merchant_id, order_id)
+		# merchant_id = session[:user_id].to_i
+		@order = Order.find_by_id(order_id)
+		# merchant = Merchant.find_by(id: session[:user_id])
+		@merchant_items = []
+
+		@order.order_items.each do |order_item|
+			if order_item.product.merchant_id == session[:user_id]
+				@merchant_items << order_item
+			end
+		end
   
 		if @order.nil?
 			head :not_found

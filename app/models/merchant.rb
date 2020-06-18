@@ -14,22 +14,26 @@ class Merchant < ApplicationRecord
     return merchant
   end
 
-  # def self.total_revenue
-  #   merchant = Merchant.find_by(id: session[:user_id], provider: "github")
-  #   total = 0
+  # def self.find_order_items
+  #   merchant = Merchant.find_by(id: session[:user_id])
 
-  #   if merchant.orders.length == 0
-  #     return total
-  #   else
-  #     merchant.orders.each do |order|
-  #       order.order_items.each do |order_item|
-  #         total += (order_item.price * order_item.quantity)
-  #       end
-  #     end
-  #   end
-
-  #   return total
+  #   merchant.order_items
   # end
+
+  def total_revenue
+
+    total = 0
+
+    if self.order_items.length == 0
+      return total
+    else
+      self.order_items.each do |order_item|
+        total += (order_item.price * order_item.quantity)
+      end
+    end
+
+    return total
+  end
 
   # self.order_items.each do |oi|
   #   order_merchant = oi.product.merchant
