@@ -48,9 +48,9 @@ describe OrderItem do
     end
   end
 
-  describe "check order item existence" do
-    
-  end
+  # describe "check order item existence" do
+    #Need Jessica to do this one, unclear of method and how to test
+  # end
 
   describe "reduce inventory" do
     it "reduces correctly" do
