@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
 
+  #Login
   get "/auth/github", as: "github_login"
   get "/auth/:provider/callback", to: "merchants#create"
 

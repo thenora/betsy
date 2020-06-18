@@ -6,7 +6,11 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    if session[:user_id]
+      @product = Product.new
+    else
+      flash[:error] = "Please log in to create a new product!"
+    end
   end
 
   def create

@@ -32,13 +32,13 @@
     </tr>
   </thead>
   <tbody>
-    <% @order.order_items.each do |order_item|  %>
+    <% @merchant_items.each do |merchant_item|  %>
       <tr>
-        <td><%= order_item.id %></td>
-        <td><%= order_item.name %></td>
-        <td><%= order_item.price %></td>
-        <td><%= order_item.quantity %></td>
-        <td><%= order_item.product.name %></td>
+        <td><%= merchant_item.id %></td>
+        <td><%= merchant_item.name %></td>
+        <td><%= merchant_item.price %></td>
+        <td><%= merchant_item.quantity %></td>
+        <td><%= merchant_item.product.name %></td>
       </tr>
     <% end %>
     </tbody>
