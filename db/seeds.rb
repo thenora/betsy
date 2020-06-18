@@ -155,6 +155,7 @@ CSV.foreach(ORDER_ITEMS_FILE, :headers => true) do |row|
   order_item.quantity = row['quantity']
   order_item.product_id = row['product_id']
   order_item.order_id = row['order_id']
+  order_item.fulfillment_status = row['fulfillment_status']
   
   successful = order_item.save
 
