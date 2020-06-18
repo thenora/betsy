@@ -4,6 +4,7 @@ describe OrderItemsController do
   before do
     @merchant = merchants(:merchant_1)
     @test_product1 = products(:product_1)
+    @test_product2 = products(:product_2)
     @new_order = orders(:order1)
     @new_order1 = orders(:order2)
     @new_order_item = order_items(:order_item1)
@@ -50,6 +51,11 @@ describe OrderItemsController do
       expect(found_order_item.order_id).must_equal session[:order_id]
 
       must_redirect_to cart_path
+
+      expect {
+        post product_order_items_path(@test_product2.id), params: new_item_hash
+      }.must_change "Product.find(#{@test_product2.id}).order_items.count", 3
+      expect(found_order_item.order.id).must_equal session[:order_id]
     end
 
     it "does not create a new OrderItem if the form data violates inventory, and responds with a redirect" do
