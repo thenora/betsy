@@ -5,7 +5,7 @@ describe OrderItem do
     @order_item = OrderItem.create(name: "order_item1")
     @new_product = products(:product_1)
     @new_order = Order.create
-    @valid_order_item = OrderItem.create!(name: @new_product.name, price: @new_product.price, quantity: @new_product.inventory, product_id: @new_product.id, order_id: @new_order.id)
+    @valid_order_item = OrderItem.create(name: @new_product.name, price: @new_product.price, quantity: @new_product.inventory, product_id: @new_product.id, order_id: @new_order.id)
   end
   
   describe "validations" do
@@ -76,9 +76,41 @@ describe OrderItem do
     end
   end
 
-  # describe "check order item existence" do
-    # TODO Need Jessica to do this one, unclear of method and how to test
-  # end
+  describe "check order item existence" do
+    it "adds to cart if item does not already exist in cart" do
+      product = products(:product_1)
+      order_item = order_items(:order_item1)
+      open_cart = orders(:order1)
+
+      another_item = OrderItem.create(
+        name: product.name,
+        price: product.price,
+        quantity: 2, 
+        photo_url: product.photo_url,
+        product_id: product.id, 
+        order_id: open_cart.id
+      )
+
+      another_item.check_order_item_existence(open_cart.id)
+      another_item.reload
+
+      expect(order_item.quantity).must_equal 5
+      expect(another_item.quantity).must_equal 2
+      expect(open_cart.order_items.count).must_equal 2
+    end
+    
+    it "updates item quantity in cart if it already exists" do
+      order_item = order_items(:order_item1)
+      another_item = order_items(:order_item1)
+      open_cart = orders(:order1)
+
+      another_item.check_order_item_existence(open_cart.id)
+      another_item.reload
+
+      expect(order_item.quantity).must_equal 10
+      expect(open_cart.order_items.count).must_equal 1
+    end
+  end
 
   describe "reduce inventory" do
     it "reduces correctly" do
