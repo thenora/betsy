@@ -66,6 +66,16 @@ describe OrderItem do
     end
   end
 
+  describe "update_product_inventory" do
+    it "returns true if product inventory is adequate for updating cart" do
+      expect(order_items(:order_item4).update_product_inventory(1)).must_equal true
+    end
+
+    it "returns false if product inventory is inadequate for updating cart" do
+      expect(order_items(:order_item4).update_product_inventory(10)).must_equal false      
+    end
+  end
+
   # describe "check order item existence" do
     # TODO Need Jessica to do this one, unclear of method and how to test
   # end
@@ -76,23 +86,16 @@ describe OrderItem do
     end
   end
 
-#   describe "add inventory" do
-#     it "adds correctly" do
-#       expected_inventory = @valid_order_item.quantity + @valid_order_item.product.inventory #5 +5
-#       # @valid_order_item.add_inventory
-#       # @valid_order_item.reload #resync w/ DB
-#       # new_inventory = @valid_order_item.product.inventory
-#       # expect(@valid_order_item.product.inventory).must_equal expected_inventory
-#       expect{@valid_order_item.add_inventory}.must_change "Product.find(#{@valid_order_item.product.id}).inventory", @valid_order_item.quantity
+  describe "add inventory" do
+    it "adds correctly" do
+      expected_inventory = @valid_order_item.quantity + @valid_order_item.product.inventory #5 +5
 
-  describe "update_product_inventory" do
-    it "returns true if product inventory is adequate for updating cart" do
-      expect(order_items(:order_item4).update_product_inventory(1)).must_equal true
-    end
+      @valid_order_item.add_inventory
+      @valid_order_item.reload
 
-    it "returns false if product inventory is inadequate for updating cart" do
-      expect(order_items(:order_item4).update_product_inventory(10)).must_equal false      
+      expect(@valid_order_item.product.inventory).must_equal expected_inventory
     end
   end
+
 end
 
