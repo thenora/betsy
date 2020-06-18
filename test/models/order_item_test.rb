@@ -36,5 +36,15 @@ describe OrderItem do
       expect(@valid_order_item.order).must_be_instance_of Order
     end
   end
+
+  describe "update_product_inventory" do
+    it "returns true if product inventory is adequate for updating cart" do
+      expect(order_items(:order_item4).update_product_inventory(1)).must_equal true
+    end
+
+    it "returns false if product inventory is inadequate for updating cart" do
+      expect(order_items(:order_item4).update_product_inventory(10)).must_equal false      
+    end
+  end
 end
 
