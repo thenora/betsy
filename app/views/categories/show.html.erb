@@ -27,7 +27,11 @@
                 </h6>
                 <h6>
                   Inventory:
-                  <%= product.inventory %>
+                  <% if product.inventory == 0 %>
+                    SOLD OUT
+                  <% else %>
+                    <%= product.inventory %>
+                  <% end %>
                 </h6>
               </div>
             </li>
