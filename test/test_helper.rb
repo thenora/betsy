@@ -34,6 +34,10 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+  def setup
+    OmniAuth.config.test_mode = true
+  end
+  
   def mock_auth_hash(merchant)
     return {
       provider: merchant.provider,
@@ -43,5 +47,15 @@ class ActiveSupport::TestCase
         nickname: merchant.username
       }
     }
+  end
+
+  def perform_login(user = nil)
+    user ||= User.first
+    
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(user))
+
+    get "/auth/github/callback"
+
+    return user
   end
 end

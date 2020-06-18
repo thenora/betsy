@@ -10,12 +10,25 @@ class ReviewsController < ApplicationController
 			description: review_params[:description],
 			product_id: params[:product_id]
 		)
-		
-		if @review.save && (session[:user_id] != params[:merchant_id])
-			flash[:success] = "Your review was added."
-		elsif (session[:user_id] == params[:merchant_id])
+
+		merchant_id = Product.find_by(id: params[:product_id]).merchant_id
+
+		# p @review.valid?
+		# p params
+		# p "SESSION: #{session[:user_id]} AND #{session[:user_id].class}"
+		# p "MERCHANT PARAM: #{merchant_id} AND #{merchant_id.class}"
+
+		if (session[:user_id] == merchant_id)
+			p "session matches merchant"
+
 			flash.now[:failure] = "You cannot review your own product."
+		elsif @review.save && (session[:user_id] != merchant_id)
+			p "success"
+
+			flash[:success] = "Your review was added."
 		else
+			p "idk"
+
 			flash.now[:failure] = "Error: Review could not be added."
 		end
 
