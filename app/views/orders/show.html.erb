@@ -1,26 +1,15 @@
 <h2>Order History</h2>
 
-<table style="text-align: center;">
-  <tr>
-      <th>Guest Name</th>
-      <th>Email</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>Zip Code</th>
-      <th>Card Number</th>
-      <th>Card Exp. Date</th>
-  </tr>
-    <tr>
-        <td><%= @order[:guest_name] %></td>
-        <td><%= @order[:email] %></td>
-        <td><%= @order[:address] %></td>
-        <td><%= @order[:city] %></td>
-        <td><%= @order[:zip_code] %></td>
-        <td><%= @order[:card_number] %></td>
-        <td><%= @order[:card_expiration_date] %></td>
+<ul>
+  <li><strong>Guest Name: </strong><%= @order[:guest_name] %></li>
+  <li><strong>Email: </strong><%= @order[:email] %></li>
+  <li><strong>Address: </strong><%= @order[:address] %></li>
+  <li><strong>City: </strong><%= @order[:city] %></li>
+  <li><strong>Zip Code: </strong><%= @order[:zip_code] %></li>
+  <li><strong>Card Number: </strong><%= @order[:card_number] %></li>
+  <li><strong>Card Exp. Date: </strong><%= @order[:card_expiration_date] %></li>
+</ul>
 
-  </tr>
-</table>
 <table class="table">
   <thead>
     <tr>
