@@ -80,9 +80,7 @@ ActiveRecord::Schema.define(version: 2020_06_17_220004) do
     t.bigint "merchant_id"
     t.boolean "status"
     t.string "photo_url"
-    t.bigint "review_id"
     t.index ["merchant_id"], name: "index_products_on_merchant_id"
-    t.index ["review_id"], name: "index_products_on_review_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -99,6 +97,5 @@ ActiveRecord::Schema.define(version: 2020_06_17_220004) do
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "merchants"
   add_foreign_key "products", "merchants"
-  add_foreign_key "products", "reviews"
   add_foreign_key "reviews", "products"
 end

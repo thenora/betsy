@@ -17,28 +17,38 @@
         <h3><%= number_to_currency(@product.price) %></h3>
       </li>
       <li>
-        <strong>Stock: </strong><%= @product.inventory %>
+        <strong>Stock: </strong>
+        <% if @product.inventory == 0 %>
+          SOLD OUT
+        <% else %>
+          <%= @product.inventory %>
+        <% end %>
       </li>
       <li>
         <%= @product.description %>
       </li>
     </ul>
-
-    <%= form_for :order_item, url: product_order_items_path(@product.id) do |f| %>
-    <div class="product-submit-quantity">
-      <section>
-        <strong><%= f.label :quantity %></strong><br>
-        <%= f.text_field :quantity %>
-      </section>
-      <%= f.hidden_field :name, :value => @product.name %>
-      <%= f.hidden_field :price, :value => @product.price %>
-      <%= f.hidden_field :photo_url, :value => @product.photo_url %>
-      <section>
-        <%= f.submit 'Add to Cart', class:"btn btn-info" %>
-      </section>
-    </div>
+    <% if @product.inventory > 0 %>
+      <%= form_for :order_item, url: product_order_items_path(@product.id) do |f| %>
+        <div class="product-submit-quantity">
+          <section>
+            <strong><%= f.label :quantity %></strong><br>
+            <%= f.text_field :quantity %>
+          </section>
+          <%= f.hidden_field :name, :value => @product.name %>
+          <%= f.hidden_field :price, :value => @product.price %>
+          <%= f.hidden_field :photo_url, :value => @product.photo_url %>
+          <section>
+            <%= f.submit 'Add to Cart', class:"btn btn-info" %>
+          </section>
+        </div>
+      <% end %>  
+    <% else %>
+      <p>
+        <br />
+        Please check back, or see what else <%= link_to @product.merchant.username, merchant_path(@product.merchant.id)  %> has available.
+      </p>
     <% end %>
-  
     <% if @product.merchant_id == session[:user_id] %>
       <p> 
         <%= link_to "Edit this product listing", edit_product_path(@product.id) %> 

@@ -18,7 +18,12 @@
         <strong>Cost: </strong><%= number_to_currency(product.price) %>
       </li>
       <li>
-        <strong>Quantity: </strong><%= product.inventory %>
+        <strong>Quantity: </strong>
+        <% if product.inventory == 0 %>
+          SOLD OUT
+        <% else %>
+          <%= product.inventory %>
+        <% end %>
       </li>
     </ul>
   <% end %>
