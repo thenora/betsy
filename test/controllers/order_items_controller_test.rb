@@ -32,7 +32,6 @@ describe OrderItemsController do
       get product_order_items_path(@test_product1.id)
       must_respond_with :success
       body = JSON.parse(response.body)
-      puts body
       expect(body.length).must_equal 2
       expect(body[0]["name"]).must_equal @test_product1.name
     end
@@ -45,7 +44,6 @@ describe OrderItemsController do
         params: new_item_hash
       }.must_change "Product.find(#{@test_product1.id}).order_items.count", 2
       
-
       found_order_item = OrderItem.find_by(order_id: session[:order_id])
       #new_order = Order.first
 
@@ -66,12 +64,46 @@ describe OrderItemsController do
       }.wont_change 'OrderItem.count'
 
       must_redirect_to root_path
-
     end
   end
 
+  describe "update" do
+    it "can update an existing order item, creates a flash, then redirects" do
+      expect{
+        patch order_item_path(@new_order_item.id), params: new_item_hash
+      }.wont_change "OrderItem.count"
 
-  #KATE WILL FINISH UPDATE AND DESTOY TESTS WEDNESDAY!!!!!!!#
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
 
+    it "renders 404 not_found, does not update in the DB for invalid order item" do
+      expect {
+        patch order_item_path(@new_order_item.id), params: new_item_hash
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+  end
+
+  describe "destroy" do
+    it "destroys an existing order item, creates a flash, then redirects" do
+      expect{
+        delete order_item_path(@new_order_item.id)
+      }.must_change "OrderItem.count", -1
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+
+    it "renders 404 not_found, does not destroy in the DB for invalid order item" do
+      expect {
+        delete order_item_path(-1)
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :not_found
+    end
+  end
 
 end
