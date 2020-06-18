@@ -2,11 +2,10 @@ require "test_helper"
 
 describe OrderItem do
   before do
-    @order_item = OrderItem.new(name: "order_item1")
+    @order_item = OrderItem.create(name: "order_item1")
     @new_product = products(:product_1)
     @new_order = Order.create
     @valid_order_item = OrderItem.create!(name: @new_product.name, price: @new_product.price, quantity: @new_product.inventory, product_id: @new_product.id, order_id: @new_order.id)
-
   end
   
   describe "validations" do
@@ -36,5 +35,34 @@ describe OrderItem do
       expect(@valid_order_item.order).must_be_instance_of Order
     end
   end
+
+  describe "check product inventory" do
+    it "returns true if inventory is available" do
+      expect(@valid_order_item.check_product_inventory).must_equal true
+    end
+
+    it "returns false if inventory not available" do
+      @valid_order_item.product.inventory = 0
+      @valid_order_item.product.save
+      expect(@valid_order_item.check_product_inventory).must_equal false
+    end
+  end
+
+  describe "check order item existence" do
+    
+  end
+
+  describe "reduce inventory" do
+    
+  end
+
+  describe "add inventory" do
+    
+
+  end
+
+
+
+
 end
 
