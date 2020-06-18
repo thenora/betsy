@@ -50,7 +50,7 @@ class ProductsController < ApplicationController
       head :not_found
       return
     end
-    # TODO add session id must match product merchant id
+    
     if @product.merchant_id != session[:user_id]
       flash[:error] = "Oops. You can only edit your own products."
       redirect_to product_path(@product.id)

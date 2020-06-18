@@ -126,11 +126,11 @@ describe Order do
       expect(@new_order.valid?).must_equal false
     end
 
-    it 'is invalid with an invalid phone number' do
-      expect(@new_order.valid?).must_equal true
-      @new_order.update(phone_num: '123.234.1234')
-      expect(@new_order.valid?).must_equal false
-    end
+    # it 'is invalid with an invalid phone number' do
+    #   expect(@new_order.valid?).must_equal true
+    #   @new_order.update(phone_num: '123.234.1234')
+    #   expect(@new_order.valid?).must_equal false
+    # end
   end
 
   describe 'total price' do
