@@ -12,7 +12,7 @@
     <li><strong>Address: </strong><%= @order[:address] %></li>
     <li><strong>City: </strong><%= @order[:city] %></li>
     <li><strong>Zip Code: </strong><%= @order[:zip_code] %></li>
-    <li><strong>Card Number: </strong><%= @order[:card_number] %></li>
+    <li><strong>Card Number: </strong>**** **** **** <%= @order[:card_number][11..14] %></li>
     <li><strong>Card Exp. Date: </strong><%= @order[:card_expiration_date] %></li>
   </ul>
 
