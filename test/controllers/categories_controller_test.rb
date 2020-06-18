@@ -1,34 +1,101 @@
 require "test_helper"
 
 describe CategoriesController do
-  it "must get index" do
-    get categories_index_url
-    must_respond_with :success
+
+  let (:product_1) {
+    products(:product_1)
+  }
+
+  let (:product_2) {
+    products(:product_2)
+  }
+
+  let (:category_1) {
+    categories(:category1)
+  }
+
+  let (:category_2) {
+    categories(:category2)
+  }
+
+  let (:category_hash) {
+    {
+      category: {
+        name: "Flowers",
+      }
+    }
+  }
+
+  describe "index" do
+    it "must get index" do
+      get categories_path
+      must_respond_with :success
+    end
   end
 
-  it "must get show" do
-    get categories_show_url
-    must_respond_with :success
+  describe "show" do
+    it "must get a page for a specific category" do
+      get category_path(category_1.id)
+      must_respond_with :success
+    end
+
+    it "will respond with not_found for invalid ids" do
+      # Arrange
+      invalid_category_id = 999
+  
+      # Act
+      get category_path(invalid_category_id)
+  
+      # Assert
+      must_respond_with :not_found
+    end
   end
 
-  it "must get new" do
-    get categories_new_url
-    must_respond_with :success
+  describe "new" do    
+    it "a not logged in user is redirected" do
+      get new_category_path
+      
+      must_respond_with :redirect
+      must_redirect_to root_path
+    end
+
+    describe "logged in" do
+      before do
+        perform_login()
+      end
+
+      it "must get form to create a new category" do
+        get new_category_path
+        must_respond_with :success
+      end
+    end
   end
 
-  it "must get create" do
-    get categories_create_url
-    must_respond_with :success
-  end
+  describe "create" do
 
-  it "must get edit" do
-    get categories_edit_url
-    must_respond_with :success
-  end
+    it "redirects and can't create a new category when not logged in" do
+      expect{ post categories_path, params: category_hash }.must_differ 'Category.count', 0
+      
+      must_respond_with :redirect
+      must_redirect_to root_path
+    end
 
-  it "must get update" do
-    get categories_update_url
-    must_respond_with :success
+    describe "logged in" do
+      before do
+        perform_login()
+      end
+
+      it "a logged in merchant can create a new category" do
+        expect {
+          post categories_path, params: category_hash
+        }.must_differ 'Category.count', 1
+
+        must_respond_with :redirect
+        must_redirect_to categories_path
+
+        expect(Category.last.name).must_equal category_hash[:category][:name]
+      end
+    end
   end
 
 end
