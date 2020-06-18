@@ -35,7 +35,7 @@
           <td><%= merchant_item.price %></td>
           <td><%= merchant_item.quantity %></td>
           <td><%= merchant_item.product.name %></td>
-          <td><%= merchant_item.status %></td>
+          <td><%= merchant_item.fulfillment_status.capitalize %></td>
         </tr>
       <% end %>
       </tbody>
