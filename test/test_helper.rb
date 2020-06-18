@@ -49,13 +49,13 @@ class ActiveSupport::TestCase
     }
   end
 
-  def perform_login(user = nil)
-    user ||= User.first
+  def perform_login(merchant = nil)
+    merchant ||= Merchant.first
     
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(user))
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(merchant))
 
     get "/auth/github/callback"
 
-    return user
+    return merchant
   end
 end
