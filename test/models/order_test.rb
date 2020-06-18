@@ -135,12 +135,12 @@ describe Order do
 
   describe 'total price' do
     it 'calculates the order total correctly' do
-      expect(orders(:order3).total_price).must_equal 65.0
+      expect(orders(:order3).total_price).must_be_close_to 18.99
     end
 
     it 'returns 0.0 if the order has no items' do
-      expect(orders(:order1).valid?).must_equal true
-      expect(orders(:order1).total_price).must_equal 0.0
+      empty_order = Order.new
+      expect(empty_order.total_price).must_equal 0.0
     end
   end
 

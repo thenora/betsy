@@ -10,9 +10,8 @@ class OrdersController < ApplicationController
 		
 	#GET /orders/:id
 	def show
-		order_id = params[:id].to_i
-		# merchant_id = session[:user_id].to_i
-		@order = Order.find_by_id(order_id)
+
+    @order = Order.find_by(id: params[:id])
 		# merchant = Merchant.find_by(id: session[:user_id])
 		@merchant_items = []
 
