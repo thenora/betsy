@@ -2,11 +2,7 @@ class Product < ApplicationRecord
   belongs_to :merchant
   has_many :order_items
   has_and_belongs_to_many :categories
-  #need to clarify this because if there's 10 plants and all get purchased, should see 10 order items
-  #product has many order items.... 
-  #has_many: order_item
-
-  #PER Jess: quantity is an attribute of the model 
+  # has_many :reviews
 
   # ? Nora's thoughts: 
   # ? has_many :order_items

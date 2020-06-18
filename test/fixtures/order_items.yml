@@ -1,31 +1,31 @@
 
 order_item1:
-  name: coffee plant1
-  price: 5.00
-  quantity: 10
-  product_id: 1
-  order_id: 1
+  name: Product 1
+  price: 10.01
+  quantity: 5
+  product: product_1
+  order: order1
 order_item2:
-  name: fiddle fig tree1
-  price: 15.99
+  name: Product 1
+  price: 10.01
   quantity: 3
-  product_id: 1
-  order_id: 2
+  product: product_1
+  order: order2
 order_item3:
-  name: fiddle fig tree2
-  price: 25.99
+  name: Product 2
+  price: 5.00
   quantity: 4
-  product_id: 2
-  order_id: 2
+  product: product_2
+  order: order2
 order_item4:
-  name: echeveria1
-  price: 21.00
+  name: Product 3
+  price: 8.99
   quantity: 1
-  product_id: 1
+  product: product_3
   order: order3
 order_item5:
-  name: echeveria2
-  price: 22.00
+  name: Product 2
+  price: 5.00
   quantity: 2
-  product_id: 2
+  product: product_2
   order: order3

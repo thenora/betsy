@@ -1,10 +1,8 @@
 class ProductsController < ApplicationController
-  # TODO setup login required
-  # skip_before_action :require_login, only: [:index, :show]
+  skip_before_action :require_login, only: [:index, :show]
 
   def index
-    @products = Product.all
-    # TODO add status active
+    @products = Product.where(status: "true")
   end
 
   def new
@@ -36,6 +34,13 @@ class ProductsController < ApplicationController
       head :not_found
       return
     end
+
+    if @product.status == false && @product.merchant_id != session[:user_id]
+      flash[:error] = "Oops. That plant isn't available. Let's find you another beautiful plant."
+      redirect_to products_path
+      return
+
+    end 
   end
 
   def edit

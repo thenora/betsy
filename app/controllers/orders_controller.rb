@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+	skip_before_action :require_login, except: [:show, :index]
 
 	#GET /orders
 	def index

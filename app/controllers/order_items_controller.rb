@@ -1,5 +1,7 @@
 class OrderItemsController < ApplicationController
 	skip_before_action :verify_authenticity_token
+	skip_before_action :require_login
+
 	#database order_items -> use OrderItem
 	#GET /order_items
 	def index

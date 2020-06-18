@@ -4,49 +4,11 @@ require 'test_helper'
 
 describe OrderItemsController do
   before do
-    @merchant = Merchant.create(
-      username: 'test_user',
-      email: 'test_user@gmail.com'
-    )
-
-    @test_product1 = Product.create(
-      name: 'test product1', 
-      price: 5.00, 
-      description: 'This is a fake plant.',
-      inventory: 5,
-      merchant_id: @merchant.id
-    )
-    @new_order = Order.create(
-      card_number: 1234567890123456, 
-      card_expiration_date: Date.today + 365, 
-      card_cvv: 123,
-      address: "15 Main Street", 
-      city: "Seattle", 
-      zip_code: 98010, 
-      guest_name: "Tyron Jenkins", 
-      email: "tyrone@gmail.com", 
-      phone_num: "(456)123-1234"
-    )
-    @new_order1 = Order.create(
-      card_number: 1234567890123457, 
-      card_expiration_date: Date.today + 365, 
-      card_cvv: 121,
-      address: "151 Main Street", 
-      city: "Seattle", 
-      zip_code: 98011, 
-      guest_name: "test_user1", 
-      email: "test_user1@gmail.com", 
-      phone_num: "(456)123-1235"
-    )
-    @new_order_item = OrderItem.create(
-      name: @test_product1.name, 
-      price: @test_product1.price, 
-      quantity: 1, 
-      product_id: @test_product1.id, 
-      order_id: @new_order.id
-    )
-
-
+    @merchant = merchants(:merchant_1)
+    @test_product1 = products(:product_1)
+    @new_order = orders(:order1)
+    @new_order1 = orders(:order2)
+    @new_order_item = order_items(:order_item1)
   end
 
   let (:new_item_hash) {
@@ -70,7 +32,7 @@ describe OrderItemsController do
       get product_order_items_path(@test_product1.id)
       must_respond_with :success
       body = JSON.parse(response.body)
-      expect(body.length).must_equal 1
+      expect(body.length).must_equal 2
       expect(body[0]["name"]).must_equal @test_product1.name
     end
   end
@@ -82,7 +44,6 @@ describe OrderItemsController do
         params: new_item_hash
       }.must_change "Product.find(#{@test_product1.id}).order_items.count", 2
       
-
       found_order_item = OrderItem.find_by(order_id: session[:order_id])
       #new_order = Order.first
 
@@ -103,12 +64,46 @@ describe OrderItemsController do
       }.wont_change 'OrderItem.count'
 
       must_redirect_to root_path
-
     end
   end
 
+  describe "update" do
+    it "can update an existing order item, creates a flash, then redirects" do
+      expect{
+        patch order_item_path(@new_order_item.id), params: new_item_hash
+      }.wont_change "OrderItem.count"
 
-  #KATE WILL FINISH UPDATE AND DESTOY TESTS WEDNESDAY!!!!!!!#
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
 
+    it "renders 404 not_found, does not update in the DB for invalid order item" do
+      expect {
+        patch order_item_path(@new_order_item.id), params: new_item_hash
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+  end
+
+  describe "destroy" do
+    it "destroys an existing order item, creates a flash, then redirects" do
+      expect{
+        delete order_item_path(@new_order_item.id)
+      }.must_change "OrderItem.count", -1
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+
+    it "renders 404 not_found, does not destroy in the DB for invalid order item" do
+      expect {
+        delete order_item_path(-1)
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :not_found
+    end
+  end
 
 end

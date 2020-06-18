@@ -2,6 +2,7 @@
 
 <section>
   <% unless @merchant.nil? %>
+  # TODO add require login as a controller filter -i think?
 
   <%# <section>
     <h3>Total Earnings: <%= @total_revenue %> 
@@ -9,6 +10,7 @@
 
   <section>
     <%= link_to "Add a product", new_product_path %>
+    <%= link_to "Add a category", new_category_path %>
     <h3>Your Orders:</h3>
 
     <% if @merchant.orders.length > 0 %>

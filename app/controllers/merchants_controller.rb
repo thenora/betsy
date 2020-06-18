@@ -1,4 +1,5 @@
 class MerchantsController < ApplicationController
+  skip_before_action :require_login, except: [:dashboard]
 
   def index
     @merchants = Merchant.all
@@ -16,12 +17,13 @@ class MerchantsController < ApplicationController
     auth_hash = request.env["omniauth.auth"]
 
     merchant = Merchant.find_by(uid: auth_hash[:uid], provider: "github")
+  
     if merchant
       flash[:success] = "Logged in as returning merchant #{merchant.username}"
     else
       merchant = Merchant.build_from_github(auth_hash)
 
-      if merchant.save
+      if merchant.save!
         flash[:success] = "Logged in as new merchant #{merchant.username}"
       else
         flash[:error] = "Could not create new merchant account: #{merchant.errors.messages}"
