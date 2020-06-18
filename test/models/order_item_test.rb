@@ -46,6 +46,24 @@ describe OrderItem do
       @valid_order_item.product.save
       expect(@valid_order_item.check_product_inventory).must_equal false
     end
+
+    it "returns false if incoming quantity is nil" do
+      @valid_order_item.quantity = nil
+      @valid_order_item.save
+      expect(@valid_order_item.check_product_inventory).must_equal false
+    end
+
+    it "returns false if incoming quantity is 0" do
+      @valid_order_item.quantity = 0
+      @valid_order_item.save
+      expect(@valid_order_item.check_product_inventory).must_equal false
+    end
+
+    it "returns false if product is retired" do 
+      @valid_order_item.product.status = false
+      @valid_order_item.product.save
+      expect(@valid_order_item.check_product_inventory).must_equal false
+    end
   end
 
   # describe "check order item existence" do
