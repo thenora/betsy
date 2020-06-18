@@ -44,7 +44,6 @@ describe OrderItemsController do
         params: new_item_hash
       }.must_change "Product.find(#{@test_product1.id}).order_items.count", 2
       
-
       found_order_item = OrderItem.find_by(order_id: session[:order_id])
       #new_order = Order.first
 
@@ -65,12 +64,27 @@ describe OrderItemsController do
       }.wont_change 'OrderItem.count'
 
       must_redirect_to root_path
-
     end
   end
 
   describe "update" do
-    
+    it "can update an existing order item, creates a flash, then redirects" do
+      expect{
+        patch order_item_path(@new_order_item.id), params: new_item_hash
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
+
+    it "renders 404 not_found, does not update in the DB for invalid order item" do
+      expect {
+        patch order_item_path(@new_order_item.id), params: new_item_hash
+      }.wont_change "OrderItem.count"
+
+      must_respond_with :redirect
+      must_redirect_to cart_path
+    end
   end
 
   describe "destroy" do
@@ -83,7 +97,7 @@ describe OrderItemsController do
       must_redirect_to cart_path
     end
 
-    it "renders 404 not_found, does not update the DB for invalid order item" do
+    it "renders 404 not_found, does not destroy in the DB for invalid order item" do
       expect {
         delete order_item_path(-1)
       }.wont_change "OrderItem.count"
