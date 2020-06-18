@@ -9,6 +9,10 @@ describe ProductsController do
     products(:product_1)
   }
 
+  let (:product_2) {
+    products(:product_2)
+  }
+
   let (:inactive_product) {
     products(:product_3)
   }
@@ -34,17 +38,16 @@ describe ProductsController do
     end
 
     # TODO add doesn't display if status is set to false
+
   end
 
   describe "new" do
-    # TODO require login
     it "gets the path" do
       perform_login()
       get new_product_path
       must_respond_with :success
     end
 
-    # TODO add if user id not logged in, then it redirects to the homepage
     it "if not logged in, redirects to root path" do
       get new_product_path
       
@@ -126,7 +129,60 @@ describe ProductsController do
       must_respond_with :not_found
     end
 
-    # TODO add cannot view product with status set to false
+    it "cannot view product with status set to false if not logged in" do
+      get product_path(246273452735)
+          
+      # Assert
+      must_respond_with :not_found
+    end
+  end
+
+  describe "edit" do
+
+    describe "logged in" do
+      before do
+        perform_login()
+      end
+
+      it "can access the edit product page if logged in creator" do
+        get edit_product_path(product_1)
+
+        must_respond_with :success
+        expect(flash[:success]).wont_be_nil
+      end
+    
+      it "will respond with not_found for invalid ids" do
+        id = -1
+    
+        expect {
+          get edit_product_path(id), params: product_hash
+        }.wont_change "Product.count"
+    
+        must_respond_with :not_found
+      end
+    
+      it "can't edit another merchant's product" do
+        id = product_2.id
+
+        get edit_product_path(id)
+    
+        must_respond_with :redirect
+        must_redirect_to product_path(id) 
+    
+        expect(flash[:error]).wont_be_nil
+      end
+    end
+
+    it "can't edit a product if not logged in" do
+      id = product_2.id
+
+      get edit_product_path(id)
+  
+      must_respond_with :redirect
+      must_redirect_to root_path
+  
+      expect(flash[:error]).wont_be_nil
+    end
   end
 
   describe "update" do
