@@ -49,6 +49,7 @@ class OrderItemsController < ApplicationController
 
 	# PATCH:  /order_items/:id (params)
 	def update
+
 		# @order_item = OrderItem.find_by(id: params[:id])
 		if @order_item.nil?
 			head :not_found
@@ -61,6 +62,23 @@ class OrderItemsController < ApplicationController
 		else
 			flash[:failure] = 'Not enough inventory to update quantity.'
 			redirect_to cart_path
+			return
+		end
+	end
+
+	# PATCH: /order_items/update_status(.:format)
+	def update_status
+		@order_item = OrderItem.find_by(id: params[:id])
+		# raise "THIS IS ERROR"
+
+		if @order_item.nil?
+			# head :not_found
+			redirect_to dashboard_path
+			return
+		else
+			@order_item.update(fulfillment_status: params[:fulfillment_status])
+			flash[:success] = 'Order item fulfillment status updated.'
+			redirect_to dashboard_path
 			return
 		end
 	end

@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   resources :merchants, only: [:index, :show]
 
   #Order_Items
+  patch "/order_items/update_status", action: :update_status, controller: 'order_items', as: "order_items_update_status"
+
   resources :order_items, only: [:index, :create, :update, :destroy, :show]
 
   #Orders

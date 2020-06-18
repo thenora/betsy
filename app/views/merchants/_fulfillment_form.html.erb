@@ -1,8 +1,10 @@
 <h2><%= title %></h2>
   <section>
-    <%= form_with model: @product, url: order_item_path(item), method: :patch do |f| %>
+    <%= form_for(item, url: order_items_update_status_path, method: :patch) do |f| %>
+
       
       <%= select_tag "fulfillment_status", options_for_select([["Paid", "paid"], ["Complete", "complete"], ["Cancelled", "cancelled"]]), onchange: "this.form.submit();" %>
+
       <%# <select class="custom-select" onchange="this.form.submit();">
         <option selected><%= item.fulfillment_status.capitalize %>
         <%# <option value="1">Paid</option>
