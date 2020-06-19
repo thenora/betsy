@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
 # /product/1/order_items
   resources :products do 
-    resources :order_items
-    resources :reviews, only: [:new, :create]
+    resources :order_items, only: [:index, :create, :update, :destroy, :show]
+    resources :reviews, only: [:create]
   end
 
   #Login
@@ -20,9 +20,6 @@ Rails.application.routes.draw do
   delete "/logout", to: "merchants#destroy", as: "logout"
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
   resources :merchants, only: [:index, :show]
-
-  #Order_Items
-  resources :order_items, only: [:index, :create, :update, :destroy, :show]
 
   #Orders
   resources :orders, only: [:index, :show, :update]
