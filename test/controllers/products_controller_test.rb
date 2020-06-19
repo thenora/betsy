@@ -24,7 +24,6 @@ describe ProductsController do
         price: 39.99,
         description: "Big green plant!",
         inventory: 3,
-        # merchant_id: merchant_1.id,
         status: true,
         photo_url: "https://bloomscape.com/wp-content/uploads/2019/11/bloomscape_peopleplants_monstera-scaled.jpg"
       }

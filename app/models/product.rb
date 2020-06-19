@@ -7,8 +7,4 @@ class Product < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true, numericality: {only_float: true, greater_than: 0}
   validates :inventory, presence: true, numericality: {only_integer: true} 
-
 end
-
-
-#product.order_items..will give all order items with this product  vs product.order_item ..this is just one
