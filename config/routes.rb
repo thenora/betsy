@@ -21,11 +21,13 @@ Rails.application.routes.draw do
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
   resources :merchants, only: [:index, :show]
 
+  #Order_Items
+  patch "/order_items/update_status", action: :update_status, controller: 'order_items', as: "order_items_update_status"
+
+  resources :order_items, only: [:index, :create, :update, :destroy, :show]
+  
   #Orders
   resources :orders, only: [:index, :show, :update]
-
-  #Order Items
-  resources :order_items, only: [:index, :create, :update, :destroy, :show]
 
   # shopping cart
   get '/cart', to: 'orders#cart', as: 'cart'

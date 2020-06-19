@@ -28,7 +28,9 @@ class Merchant < ApplicationRecord
       return total
     else
       self.order_items.each do |order_item|
-        total += (order_item.price * order_item.quantity)
+        if order_item.fulfillment_status != "pending" && order_item.fulfillment_status != "cancelled"
+          total += (order_item.price * order_item.quantity)
+        end
       end
     end
 
