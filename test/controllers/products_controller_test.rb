@@ -37,8 +37,6 @@ describe ProductsController do
       must_respond_with :success
     end
 
-    # TODO add doesn't display if status is set to false
-
   end
 
   describe "new" do
