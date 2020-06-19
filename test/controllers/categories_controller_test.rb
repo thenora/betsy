@@ -40,13 +40,10 @@ describe CategoriesController do
     end
 
     it "will respond with not_found for invalid ids" do
-      # Arrange
       invalid_category_id = 999
   
-      # Act
       get category_path(invalid_category_id)
   
-      # Assert
       must_respond_with :not_found
     end
   end
@@ -72,7 +69,6 @@ describe CategoriesController do
   end
 
   describe "create" do
-
     it "redirects and can't create a new category when not logged in" do
       expect{ post categories_path, params: category_hash }.must_differ 'Category.count', 0
       

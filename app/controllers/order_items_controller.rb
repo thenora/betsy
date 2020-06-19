@@ -49,7 +49,6 @@ class OrderItemsController < ApplicationController
 
 	# PATCH:  /order_items/:id (params)
 	def update
-		# @order_item = OrderItem.find_by(id: params[:id])
 		if @order_item.nil?
 			head :not_found
 			return
@@ -67,8 +66,6 @@ class OrderItemsController < ApplicationController
 
 	# DELETE  /order_items/:id
 	def destroy
-		# @order_item = OrderItem.find_by(id: params[:id])
-
 		if @order_item.nil?
 			head :not_found
 			return
@@ -88,8 +85,7 @@ class OrderItemsController < ApplicationController
 		redirect_to cart_path
 		return
 	end
-end #class
-
+end
 
 private
 

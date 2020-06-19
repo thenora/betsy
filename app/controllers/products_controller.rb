@@ -39,7 +39,6 @@ class ProductsController < ApplicationController
       flash[:error] = "Oops. That plant isn't available. Let's find you another beautiful plant."
       redirect_to products_path
       return
-
     end 
   end
 
@@ -54,7 +53,6 @@ class ProductsController < ApplicationController
       redirect_to product_path(@product.id)
       return
     end
-
   end
 
   def update

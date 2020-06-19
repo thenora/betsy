@@ -14,6 +14,7 @@ class OrdersController < ApplicationController
 			head :not_found
 			return
 		end
+
 		@merchant_items = []
 
 		@order.order_items.each do |order_item|
@@ -25,6 +26,7 @@ class OrdersController < ApplicationController
 
 	def update
 		@open_order = nil
+		
 		if !session[:order_id].nil?
 			@open_order = Order.find_by(id: session[:order_id])
 		else
@@ -38,7 +40,6 @@ class OrdersController < ApplicationController
 			redirect_to confirmation_path
       return
 		else
-			p @open_order.errors
 			flash[:error] = 'Order could not be placed.'
 			redirect_to checkout_path
       return
