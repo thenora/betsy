@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
 # /product/1/order_items
   resources :products do 
-    resources :order_items, only: [:index, :create, :update, :destroy, :show]
+    resources :order_items, only: [:index, :create, :show]
     resources :reviews, only: [:create]
   end
 
@@ -23,6 +23,9 @@ Rails.application.routes.draw do
 
   #Orders
   resources :orders, only: [:index, :show, :update]
+
+  #Order Items
+  resources :order_items, only: [:index, :create, :update, :destroy, :show]
 
   # shopping cart
   get '/cart', to: 'orders#cart', as: 'cart'
