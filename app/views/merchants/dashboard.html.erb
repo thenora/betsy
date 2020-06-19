@@ -2,19 +2,15 @@
 
 <section>
   <% unless @merchant.nil? %>
-  # TODO add require login as a controller filter -i think?
-
-  <%# <section>
-    <h3>Total Earnings: <%= @total_revenue %> 
-  <%# </section> %>
 
   <section>
     <button type="button" class="btn btn-primary"><%= link_to "Add a product", new_product_path %></button>
     <button type="button" class="btn btn-primary"><%= link_to "Add a category", new_category_path %></button>
-    Total Earnings: $ <%= @merchant.total_revenue %>
   </section>
-
+  <br />
   </section>
+    <h5>Total Earnings: $ <%= @merchant.total_revenue %></h5>
+    <div>
     <h3>Your Orders:</h3>
 
     <table class="table">
@@ -26,6 +22,7 @@
         <th>Quantity</th>
         <th>Product</th>
         <th>Status</th>
+        <th>Change Status</th>
       </tr>
     </thead>
     <tbody>
@@ -36,8 +33,9 @@
           <td><%= item.price %></td>
           <td><%= item.quantity %></td>
           <td><%= item.product.name %></td>
+          <td><%= item.fulfillment_status.capitalize %></td>
           <td>
-          <%= render partial: "fulfillment_form", locals: { item: item, title: 'Edit Status'} %>
+          <%= render partial: "fulfillment_form", locals: { item: item, title: ''} %>
           </td>
         </tr>
       <% end %>
@@ -53,6 +51,7 @@
       <% end %>
       </ul>
     <% end %>
+    </div>
 
   </section>
 
