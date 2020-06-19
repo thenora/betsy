@@ -47,7 +47,8 @@ describe OrdersController do
   describe "show" do
     it "responds with success when showing an existing valid order" do
       perform_login(merchants(:merchant_1))
-      new_order = Order.create
+      #new_order = Order.create
+      new_order = orders(:order1)
       get order_path(new_order.id)
       must_respond_with :success
     end
@@ -84,7 +85,6 @@ describe OrdersController do
         patch order_path(new_order.id), params: update_hash
       }.wont_change 'Order.count'
 
-      p new_order
       must_respond_with :redirect
       must_redirect_to confirmation_path
 
@@ -174,11 +174,15 @@ describe OrdersController do
 				product_id: @product.id,
 				photo_url: 'order.jpg',
 				order_id: valid_cart.id
-			)
-
+      )
       get confirmation_path
 
       must_respond_with :found
+      
+      @test_product1 = products(:product_1)
+      post product_order_items_path(@test_product1.id), params: new_item_hash
+
+      get confirmation_path
     end
 
     it "responds with redirect if open cart is not found" do

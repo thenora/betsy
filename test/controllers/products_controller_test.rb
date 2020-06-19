@@ -24,7 +24,6 @@ describe ProductsController do
         price: 39.99,
         description: "Big green plant!",
         inventory: 3,
-        # merchant_id: merchant_1.id,
         status: true,
         photo_url: "https://bloomscape.com/wp-content/uploads/2019/11/bloomscape_peopleplants_monstera-scaled.jpg"
       }
@@ -36,8 +35,6 @@ describe ProductsController do
       get products_path
       must_respond_with :success
     end
-
-    # TODO add doesn't display if status is set to false
 
   end
 
@@ -112,7 +109,7 @@ describe ProductsController do
       valid_product_id = product_1.id
   
       # Act
-      get "/products/#{valid_product_id}"
+      get product_path(valid_product_id)
   
       # Assert
       must_respond_with :success
@@ -123,7 +120,7 @@ describe ProductsController do
       invalid_product_id = 999
   
       # Act
-      get "/products/#{invalid_product_id}"
+      get product_path(invalid_product_id)
   
       # Assert
       must_respond_with :not_found

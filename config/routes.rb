@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
 # /product/1/order_items
   resources :products do 
-    resources :order_items
-    resources :reviews, only: [:new, :create]
+    resources :order_items, only: [:index, :create, :show]
+    resources :reviews, only: [:create]
   end
 
   #Login
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "merchants#create"
 
   #Category
-  resources :categories, except: :destroy
+  resources :categories, except: [:edit, :update, :destroy]
 
   #Merchant
   delete "/logout", to: "merchants#destroy", as: "logout"
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   patch "/order_items/update_status", action: :update_status, controller: 'order_items', as: "order_items_update_status"
 
   resources :order_items, only: [:index, :create, :update, :destroy, :show]
-
+  
   #Orders
   resources :orders, only: [:index, :show, :update]
 
