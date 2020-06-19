@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "merchants#create"
 
   #Category
-  resources :categories, except: :destroy
+  resources :categories, except: [:edit, :update, :destroy]
 
   #Merchant
   delete "/logout", to: "merchants#destroy", as: "logout"
