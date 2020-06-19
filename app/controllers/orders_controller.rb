@@ -40,7 +40,6 @@ class OrdersController < ApplicationController
 			redirect_to confirmation_path
       return
 		else
-			p @open_order.errors
 			flash[:error] = 'Order could not be placed.'
 			redirect_to checkout_path
       return
