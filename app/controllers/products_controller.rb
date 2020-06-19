@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
+  before_action :find_product, only: [:show, :edit, :update]
 
   def index
     @products = Product.where(status: "true")
@@ -29,7 +30,6 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find_by(id: params[:id]) # TODO make controller fixture
     if @product.nil?
       head :not_found
       return
@@ -44,8 +44,6 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find_by(id: params[:id])
-
     if @product.nil?
       head :not_found
       return
@@ -60,8 +58,6 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product = Product.find_by(id: params[:id])
-
     if @product.nil?
       head :not_found
       return
@@ -76,11 +72,11 @@ class ProductsController < ApplicationController
     end
   end
 
-  def destroy
-    # TODO do we need this?
-  end
-
   private
+
+  def find_product
+    @product = Product.find_by(id: params[:id])
+  end
 
   def product_params
     return params.require(:product).permit(

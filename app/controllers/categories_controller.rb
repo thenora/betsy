@@ -28,8 +28,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # TODO change route resources to not include edit / update
-
   private             
   
   def category_params

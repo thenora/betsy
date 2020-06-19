@@ -57,10 +57,6 @@ class MerchantsController < ApplicationController
 
   private
 
-  def category_params
-    return params.require(:merchant).permit(:username, :email, :uid, :provider)
-  end
-
   def merchant_params
     return params.require(:merchant).permit(:id, :username, :email, :uid, :provider)
   end
